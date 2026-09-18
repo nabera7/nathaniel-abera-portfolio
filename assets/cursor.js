@@ -19,6 +19,7 @@
 
     var mx = -100, my = -100;
     var isDown = false;
+    var overButton = false;
     var downTimer = null;
 
     function resize() {
@@ -41,6 +42,18 @@
         if (downTimer) clearTimeout(downTimer);
         downTimer = setTimeout(function() { isDown = false; }, 120);
     });
+
+    // Also show effect cursor when hovering the CTA button
+    document.addEventListener('mouseover', function(e) {
+        if (e.target && e.target.id === 'cta-button') {
+            overButton = true;
+        }
+    });
+    document.addEventListener('mouseout', function(e) {
+        if (e.target && e.target.id === 'cta-button') {
+            overButton = false;
+        }
+    });
     document.addEventListener('mouseleave', function() { mx = -100; my = -100; });
 
     // Hotspot: (22, 0) from the .cur files
@@ -52,7 +65,7 @@
             requestAnimationFrame(draw);
             return;
         }
-        var img = isDown ? clickImg : normalImg;
+        var img = (isDown || overButton) ? clickImg : normalImg;
         if (img.complete && img.naturalWidth > 0) {
             ctx.drawImage(img, mx - hotX, my - hotY);
         }
