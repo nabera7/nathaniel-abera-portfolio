@@ -9,7 +9,7 @@ html {
 }
 
 body {
-    font-family: 'Lato', sans-serif;
+    font-family: 'Inter', sans-serif;
     background: #000;
     color: #fff;
     min-height: 100vh;
@@ -55,12 +55,24 @@ body {
 }
 
 .project-header h1 {
+    display: inline-block;
     font-size: 2.5rem;
     font-weight: 700;
     color: #ffffff;
     margin-bottom: 1.2rem;
     line-height: 1.2;
     text-shadow: 0 0 14px rgba(56, 189, 248, 0.6);
+    background: rgba(56, 189, 248, 0.12);
+    padding: 0.5em 1.2em;
+    border-radius: 50px;
+}
+
+.project-header h1::before {
+    content: '\2022';
+    color: #38bdf8;
+    margin-right: 0.4em;
+    font-size: 1.2em;
+    vertical-align: middle;
 }
 
 .project-header .description {
@@ -84,11 +96,11 @@ body {
     width: 100%;
     text-align: left;
     background: #0a0a0a;
-    border: 2px solid #38bdf8;
+    border: 1px solid #38bdf8;
     padding: 20px 25px;
     color: #fff;
     cursor: pointer;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Inter', sans-serif;
     transition: all 0.3s ease;
 }
 
@@ -99,7 +111,7 @@ body {
 }
 
 .doc-toggle .doc-label {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: #ffffff;
     letter-spacing: 0.5px;
@@ -107,7 +119,7 @@ body {
 }
 
 .doc-toggle .doc-hint {
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: #ffffff;
     margin-top: 10px;
     font-weight: 300;
