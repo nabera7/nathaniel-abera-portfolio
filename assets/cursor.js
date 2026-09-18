@@ -1,4 +1,4 @@
-// Custom large green macOS-style cursor drawn on canvas
+// Custom large Kali Linux-style cursor drawn on canvas
 const cursorCanvas = document.createElement('canvas');
 cursorCanvas.id = 'cursor-layer';
 cursorCanvas.style.cssText = 'position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;';
@@ -34,48 +34,56 @@ document.addEventListener('mouseleave', () => {
     cursorCanvas.style.display = 'none';
 });
 
-// Draw the cursor (green macOS-style arrow, pointing up-left)
+// Keep hiding native cursor on dynamically added elements
+const observer = new MutationObserver(() => {
+    const els = document.querySelectorAll('*');
+    for (let i = 0; i < els.length; i++) {
+        els[i].style.cursor = 'none';
+    }
+});
+observer.observe(document.body, { childList: true, subtree: true });
+
+// Draw Kali Linux-style cursor (sharp black/white arrow, Kali-green accent)
 function drawCursor() {
     cursorCtx.clearRect(0, 0, cursorCanvas.width, cursorCanvas.height);
     if (!cursorVisible) return;
 
     const x = mouseX;
     const y = mouseY;
-    const scale = 2.5; // large cursor
+    const scale = 2;
 
     cursorCtx.save();
     cursorCtx.translate(x, y);
     cursorCtx.scale(scale, scale);
 
-    // Main arrow body (points up-left like macOS pointer)
-    cursorCtx.fillStyle = '#00FF44';
-    cursorCtx.strokeStyle = '#00CC33';
-    cursorCtx.lineWidth = 1.5;
+    // Kali-style: white outer, black border, sharp arrow
+    cursorCtx.fillStyle = '#ffffff';
+    cursorCtx.strokeStyle = '#000000';
+    cursorCtx.lineWidth = 1.2;
 
+    // Classic sharp arrow pointer (points up-left)
     cursorCtx.beginPath();
-    cursorCtx.moveTo(0, 0);          // tip at top-left
-    cursorCtx.lineTo(0, 16);         // down left side
-    cursorCtx.lineTo(5, 11);         // inner notch
-    cursorCtx.lineTo(8, 16);         // down to tail inner
-    cursorCtx.lineTo(10, 14);        // tail tip
-    cursorCtx.lineTo(6, 9);          // up to notch
-    cursorCtx.lineTo(14, 8);         // right side
-    cursorCtx.closePath();           // back to tip
+    cursorCtx.moveTo(0, 0);        // tip
+    cursorCtx.lineTo(0, 12);       // down left edge
+    cursorCtx.lineTo(3.5, 10.5);   // inner notch
+    cursorCtx.lineTo(5.5, 15);     // tail
+    cursorCtx.lineTo(7.5, 13.5);   // tail underside
+    cursorCtx.lineTo(5, 8.5);      // inner notch bottom
+    cursorCtx.lineTo(8, 8);        // right edge
+    cursorCtx.closePath();
     cursorCtx.fill();
     cursorCtx.stroke();
+
+    // Kali-green dot at the tip
+    cursorCtx.fillStyle = '#00B4D8';
+    cursorCtx.beginPath();
+    cursorCtx.arc(0, 0, 1.5, 0, Math.PI * 2);
+    cursorCtx.fill();
 
     cursorCtx.restore();
 
     requestAnimationFrame(drawCursor);
 }
-
-// Also update cursor style on dynamically added elements
-const observer = new MutationObserver(() => {
-    document.querySelectorAll('*').forEach(el => {
-        el.style.cursor = 'none';
-    });
-});
-observer.observe(document.body, { childList: true, subtree: true });
 
 window.addEventListener('resize', resizeCursorCanvas);
 
