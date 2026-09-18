@@ -24,8 +24,8 @@ function drawCurvedArrow(progress) {
     const subtitleRect = subtitle.getBoundingClientRect();
     const buttonRect = button.getBoundingClientRect();
 
-    // Start from the RIGHT SIDE of the subtitle
-    const startX = subtitleRect.right + 20;
+    // Start from the RIGHT SIDE of the subtitle (close to the word)
+    const startX = subtitleRect.right + 8;
     const startY = subtitleRect.top + subtitleRect.height / 2;
 
     // End at the RIGHT side of the button
