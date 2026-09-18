@@ -2,8 +2,11 @@
 (function() {
     // Hide native cursor
     var style = document.createElement('style');
-    style.textContent = '* { cursor: none !important; }';
+    style.textContent = 'html, body, canvas, * { cursor: none !important; }';
     document.head.appendChild(style);
+    // Also set directly on body for immediate effect
+    document.body.style.cursor = 'none';
+    document.documentElement.style.cursor = 'none';
 
     // Load cursor images
     var normalImg = new Image();

@@ -2,11 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: url('assets/cursor_normal2.cur'), auto !important;
-}
-
-*:active {
-    cursor: url('assets/cursor_effect_no.cur'), auto !important;
 }
 
 html {
