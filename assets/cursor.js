@@ -1,12 +1,23 @@
 // Reliable custom cursor via canvas (works over everything)
 (function() {
-    // Hide native cursor
+    // Hide native cursor - aggressive multi-layer approach
     var style = document.createElement('style');
-    style.textContent = 'html, body, canvas, * { cursor: none !important; }';
+    style.id = 'hide-native-cursor';
+    style.textContent = 'html, body, canvas, div, button, img, a, p, h1, h2, * { cursor: none !important; } html:active, body:active, *:active { cursor: none !important; }';
     document.head.appendChild(style);
-    // Also set directly on body for immediate effect
     document.body.style.cursor = 'none';
     document.documentElement.style.cursor = 'none';
+
+    // Aggressively strip any cursor on all current elements
+    function stripCursors() {
+        var all = document.querySelectorAll('*');
+        for (var i = 0; i < all.length; i++) {
+            all[i].style.cursor = 'none';
+        }
+    }
+    stripCursors();
+    // Re-strip periodically to catch dynamic elements
+    setInterval(stripCursors, 500);
 
     // Load cursor images
     var normalImg = new Image();

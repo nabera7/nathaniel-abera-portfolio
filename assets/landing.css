@@ -113,7 +113,7 @@ h1 {
 
 .cta-button:disabled {
     opacity: 0.5;
-    cursor: not-allowed;
+    cursor: none;
 }
 
 /* Breathing/pulsing animation for everything */
