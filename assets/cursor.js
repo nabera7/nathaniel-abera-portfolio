@@ -8,17 +8,6 @@
     document.body.style.cursor = 'none';
     document.documentElement.style.cursor = 'none';
 
-    // Aggressively strip any cursor on all current elements
-    function stripCursors() {
-        var all = document.querySelectorAll('*');
-        for (var i = 0; i < all.length; i++) {
-            all[i].style.cursor = 'none';
-        }
-    }
-    stripCursors();
-    // Re-strip periodically to catch dynamic elements
-    setInterval(stripCursors, 500);
-
     // Load cursor images
     var normalImg = new Image();
     normalImg.src = 'assets/cursor_normal2.png';

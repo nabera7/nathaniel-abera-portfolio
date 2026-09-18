@@ -127,4 +127,19 @@ window.addEventListener('resize', () => {
     effectsCanvas.height = window.innerHeight;
 });
 
+// Reset on back/forward navigation (bfcache) so the page isn't stuck black
+window.addEventListener('pageshow', function(e) {
+    if (e.persisted) {
+        warpActive = false;
+        warpT = 0;
+        isTransitioning = false;
+        if (fadeOverlay) fadeOverlay.remove();
+        fadeOverlay = null;
+        const hero = document.querySelector('.hero-container');
+        if (hero) { hero.style.opacity = '1'; }
+        const arrow = document.getElementById('arrow-canvas');
+        if (arrow) { arrow.style.opacity = '1'; }
+    }
+});
+
 animate();
