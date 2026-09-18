@@ -24,17 +24,17 @@ function drawCurvedArrow(progress) {
     const subtitleRect = subtitle.getBoundingClientRect();
     const buttonRect = button.getBoundingClientRect();
 
-    // Start from subtitle bottom
-    const startX = centerX;
-    const startY = subtitleRect.bottom - arrowCanvas.height / 2 + centerY - 50;
+    // Start from the RIGHT SIDE of the subtitle
+    const startX = subtitleRect.right + 20;
+    const startY = subtitleRect.top + subtitleRect.height / 2;
 
-    // End at button left side
-    const endX = buttonRect.right - arrowCanvas.width / 2 + centerX + 30;
-    const endY = buttonRect.top - arrowCanvas.height / 2 + centerY + buttonRect.height / 2;
+    // End at the RIGHT side of the button
+    const endX = buttonRect.right + 15;
+    const endY = buttonRect.top + buttonRect.height / 2;
 
-    // Control point for curve (makes it curve to the right)
-    const controlX = (startX + endX) / 2 + 100;
-    const controlY = (startY + endY) / 2 - 50;
+    // Control point for curve (makes it swoop out to the right then back)
+    const controlX = Math.max(startX, endX) + 120;
+    const controlY = (startY + endY) / 2;
 
     arrowCtx.strokeStyle = '#FF0000';
     arrowCtx.lineWidth = 3;
@@ -69,8 +69,18 @@ function drawCurvedArrow(progress) {
 
     // Draw arrowhead at the end if progress > 0
     if (progress > 0.8) {
-        const headlen = 20;
-        const angle = Math.atan2(lastY - controlY, lastX - controlX);
+        const headlen = 18;
+        // Angle based on the tangent of the curve near the end
+        const prevT = Math.max(0, progress - 0.05);
+        const prevX =
+            Math.pow(1 - prevT, 2) * startX +
+            2 * (1 - prevT) * prevT * controlX +
+            Math.pow(prevT, 2) * endX;
+        const prevY =
+            Math.pow(1 - prevT, 2) * startY +
+            2 * (1 - prevT) * prevT * controlY +
+            Math.pow(prevT, 2) * endY;
+        const angle = Math.atan2(lastY - prevY, lastX - prevX);
 
         arrowCtx.fillStyle = '#FF0000';
         arrowCtx.beginPath();
