@@ -1,22 +1,23 @@
-// Catalog background: starfield (persistent) + multilingual rain (side columns, classic fade trail)
+// Catalog background: starfield (full screen) + multilingual rain (side columns, fade trail)
+// Stars drawn on top layer so rain fade never dims them.
 (function() {
-    // --- Stars canvas (no fade, persistent twinkle) ---
-    var starCanvas = document.createElement('canvas');
-    starCanvas.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;';
-    document.body.insertBefore(starCanvas, document.body.firstChild);
-    var sctx = starCanvas.getContext('2d');
-
-    // --- Rain canvas (with fade trail) ---
+    // --- Rain canvas (bottom layer, with fade trail) ---
     var rainCanvas = document.createElement('canvas');
     rainCanvas.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;';
-    document.body.insertBefore(rainCanvas, starCanvas.nextSibling);
+    document.body.insertBefore(rainCanvas, document.body.firstChild);
     var rctx = rainCanvas.getContext('2d');
 
+    // --- Stars canvas (top layer, persistent twinkle, never faded) ---
+    var starCanvas = document.createElement('canvas');
+    starCanvas.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;';
+    document.body.insertBefore(starCanvas, rainCanvas.nextSibling);
+    var sctx = starCanvas.getContext('2d');
+
     function resize() {
-        starCanvas.width = window.innerWidth;
-        starCanvas.height = window.innerHeight;
         rainCanvas.width = window.innerWidth;
         rainCanvas.height = window.innerHeight;
+        starCanvas.width = window.innerWidth;
+        starCanvas.height = window.innerHeight;
     }
     resize();
     window.addEventListener('resize', resize);
@@ -25,12 +26,12 @@
     var stars = [];
     function initStars() {
         stars = [];
-        for (var i = 0; i < 150; i++) {
+        for (var i = 0; i < 180; i++) {
             stars.push({
                 x: Math.random() * starCanvas.width,
                 y: Math.random() * starCanvas.height,
                 r: Math.random() * 1.4 + 0.3,
-                o: Math.random() * 0.6 + 0.3,
+                o: Math.random() * 0.7 + 0.3,
                 sp: Math.random() * 0.02 + 0.005,
                 dir: Math.random() > 0.5 ? 1 : -1
             });
@@ -82,15 +83,18 @@
     window.addEventListener('resize', function() { resize(); initStars(); initRain(); });
 
     function drawRain() {
-        // Classic Matrix fade trail: semi-transparent black over whole rain canvas
-        rctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-        rctx.fillRect(0, 0, rainCanvas.width, rainCanvas.height);
-
-        rctx.font = fontSize + 'px monospace';
-
+        // Fade overlay only on the side columns so center stays clear for stars
         var sideRatio = 0.22;
         var leftB = Math.floor(columns * sideRatio);
         var rightB = Math.floor(columns * (1 - sideRatio));
+
+        rctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
+        // Left side fade
+        rctx.fillRect(0, 0, leftB * fontSize + fontSize, rainCanvas.height);
+        // Right side fade
+        rctx.fillRect((rightB - 1) * fontSize, 0, rainCanvas.width - (rightB - 1) * fontSize, rainCanvas.height);
+
+        rctx.font = fontSize + 'px monospace';
 
         for (var i = 0; i < columns; i++) {
             if (i > leftB && i < rightB) continue;
@@ -98,7 +102,6 @@
             var x = i * fontSize;
             var y = drops[i] * fontSize;
 
-            // Bright green head
             rctx.fillStyle = '#00FF41';
             rctx.fillText(allChars[Math.floor(Math.random() * allChars.length)], x, y);
 
