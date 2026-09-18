@@ -96,9 +96,7 @@ body {
     display: block;
     width: 100%;
     text-align: left;
-    background: rgba(40, 40, 44, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: #101418;
     border: 1px solid #38bdf8;
     padding: 20px 25px;
     color: #fff;
