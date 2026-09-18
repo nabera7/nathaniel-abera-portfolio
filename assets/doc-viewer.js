@@ -1,4 +1,4 @@
-// Collapsible PDF viewer: only one open at a time
+// Collapsible PDF viewer: only one open at a time, toggle prompt text
 (function() {
     document.addEventListener('DOMContentLoaded', function() {
         var toggles = document.querySelectorAll('.doc-toggle');
@@ -6,15 +6,24 @@
             toggle.addEventListener('click', function() {
                 var panel = toggle.nextElementSibling;
                 var isOpen = panel.classList.contains('open');
+                var prompt = toggle.querySelector('.view-prompt');
 
-                // Close all panels
+                // Close all panels and reset their prompts
                 document.querySelectorAll('.doc-panel.open').forEach(function(p) {
                     p.classList.remove('open');
+                    var t = p.previousElementSibling;
+                    if (t) {
+                        var pr = t.querySelector('.view-prompt');
+                        if (pr) pr.textContent = 'Click to View';
+                    }
                 });
 
                 // Open the clicked one (if it wasn't already open)
                 if (!isOpen) {
                     panel.classList.add('open');
+                    if (prompt) prompt.textContent = 'Click to Close';
+                } else {
+                    if (prompt) prompt.textContent = 'Click to View';
                 }
             });
         });

@@ -55,14 +55,15 @@ body {
 }
 
 .project-header h1 {
-    display: inline-block;
-    font-size: 2.5rem;
+    display: inline-flex;
+    align-items: center;
+    font-size: 1.8rem;
     font-weight: 700;
     color: #ffffff;
     margin-bottom: 1.2rem;
     line-height: 1.2;
     text-shadow: 0 0 14px rgba(56, 189, 248, 0.6);
-    background: rgba(56, 189, 248, 0.12);
+    background: #101418;
     padding: 0.5em 1.2em;
     border-radius: 50px;
 }
@@ -72,7 +73,7 @@ body {
     color: #38bdf8;
     margin-right: 0.4em;
     font-size: 1.2em;
-    vertical-align: middle;
+    line-height: 1;
 }
 
 .project-header .description {
@@ -95,7 +96,9 @@ body {
     display: block;
     width: 100%;
     text-align: left;
-    background: #0a0a0a;
+    background: rgba(40, 40, 44, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     border: 1px solid #38bdf8;
     padding: 20px 25px;
     color: #fff;
