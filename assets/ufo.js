@@ -166,22 +166,18 @@
             u.wobble += 0.04;
             u.beamPhase += 0.08;
 
-            // Steer up/down to avoid the center content zone
-            var inX = u.x > zone.cx - zone.rx && u.x < zone.cx + zone.rx;
-            var inY = u.y > zone.cy - zone.ry && u.y < zone.cy + zone.ry;
-            if (inX && inY) {
-                // push vertically out of the zone (go around)
-                var dyTop = zone.cy - zone.ry - u.y;
-                var dyBottom = zone.cy + zone.ry - u.y;
-                // steer toward nearest vertical edge
-                if (Math.abs(dyTop) < Math.abs(dyBottom)) {
-                    u.vy = -Math.abs(u.vy) - 0.5; // go up
-                } else {
-                    u.vy = Math.abs(u.vy) + 0.5;  // go down
-                }
-            } else {
-                // relax steering back to gentle drift
-                u.vy *= 0.98;
+            // Gentle magnetic repulsion around the content zone (soft force field)
+            var dx = u.x - zone.cx;
+            var dy = u.y - zone.cy;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+            var influence = zone.rx * 1.1; // radius of the repulsion field
+            if (dist < influence && dist > 0) {
+                // Soft inverse-square-ish push away, scaled to stay subtle
+                var strength = (1 - dist / influence) * 0.6;
+                var nx = dx / dist;
+                var ny = dy / dist;
+                u.x += nx * strength;
+                u.y += ny * strength;
             }
 
             drawUfo(u);
