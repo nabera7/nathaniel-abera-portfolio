@@ -88,8 +88,8 @@ h1 {
     font-family: 'Lato', sans-serif;
     font-weight: 700;
     letter-spacing: 1px;
-    background: transparent;
-    color: #0ea5e9;
+    background: #ffffff;
+    color: #000000;
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 3l18 9-18 10V12H1V7h2V3z" fill="%2300FF44" stroke="%2300CC33" stroke-width="1"/></svg>') 2 2, pointer;
     transition: all 0.2s ease;
     position: relative;
@@ -102,7 +102,7 @@ h1 {
 }
 
 .cta-button:hover {
-    color: #ffffff;
+    color: #000000;
     animation: buttonShake 0.5s ease-in-out infinite, borderRgbWave 0.4s linear infinite;
     box-shadow: 0 0 40px rgba(255, 0, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.5);
 }
