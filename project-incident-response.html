@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Incident Response &amp; Remediation — Cybersecurity Portfolio</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/project.css">
+</head>
+<body>
+    <div class="project-container">
+        <a href="catalog.html" class="back-link">← Back to Projects</a>
+        <header class="project-header">
+            <h1>Incident Response &amp; Remediation</h1>
+            <p class="description">A complete incident response engagement beginning with a phishing alert and following the compromise through detection, investigation, containment, eradication, and recovery. This project documents the full investigative chain: tracing lateral movement between systems, analyzing Kerberos authentication anomalies, removing rogue accounts and malware, and verifying that every remediation step was effective before closing the incident.</p>
+        </header>
+
+        <div class="pdf-viewer">
+            <iframe src="assets/pdfs/incident-response-remediation.pdf#toolbar=0&navpanes=0" title="Incident Response &amp; Remediation"></iframe>
+        </div>
+    </div>
+    <script>
+        // Prevent right-click download on the PDF viewer
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.closest('.pdf-viewer') || e.target.tagName === 'IFRAME') {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

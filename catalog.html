@@ -3,115 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cybersecurity Projects Catalog</title>
+    <title>Cybersecurity Portfolio — Projects</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/catalog.css">
 </head>
 <body>
-    <canvas id="creatures"></canvas>
-
     <div class="catalog-container">
         <header class="catalog-header">
             <h1>Cybersecurity Projects</h1>
-            <p>Performance Assessments from Western Governors University demonstrating real-world security expertise across incident response, cryptography, compliance, automation, and more.</p>
+            <p>Explore hands-on projects in incident response, cryptography, security policy, automation, and secure software development. Each project reflects real security challenges and the process of identifying, analyzing, and remediating them.</p>
         </header>
 
         <div class="projects-grid">
-            <!-- D833 Capstone -->
-            <div class="project-box" id="d833">
-                <h2>Capstone — D833</h2>
-                <p class="course-focus">Incident Response & Remediation</p>
-                <p class="description">Full incident response lifecycle: threat detection, investigation, containment, eradication, recovery, and post-incident analysis. Hands-on lab environment simulating real security operations.</p>
-                <div class="pdf-viewer">
-                    <iframe src="assets/pdfs/D833_Capstone_Executive_Summary.pdf" title="D833 Capstone Report"></iframe>
-                </div>
-                <a href="assets/pdfs/D833_Capstone_Executive_Summary.pdf" download class="download-btn">Download Full Report</a>
-            </div>
+            <a href="project-incident-response.html" class="project-card">
+                <h2>Incident Response &amp; Remediation</h2>
+                <p class="preview">A full incident response lifecycle exercise: detecting a phishing-driven compromise, tracing lateral movement, containing the threat, and documenting remediation. Follows the complete chain from initial alert to verified recovery.</p>
+                <span class="cta-hint">View Project →</span>
+            </a>
 
-            <!-- C845 Information Systems Security -->
-            <div class="project-box" id="c845">
-                <h2>Information Systems Security — C845</h2>
-                <p class="course-focus">Access Control & Security Architecture</p>
-                <p class="description">Design and implementation of access control systems, security policies, and architecture patterns for enterprise environments. Includes practical application scenarios and policy documentation.</p>
-                <div class="pdf-viewer">
-                    <iframe src="assets/pdfs/C845_Information_Systems_Security.pdf" title="C845 Report"></iframe>
-                </div>
-                <a href="assets/pdfs/C845_Information_Systems_Security.pdf" download class="download-btn">Download Full Report</a>
-            </div>
+            <a href="project-information-security.html" class="project-card">
+                <h2>Information Systems Security</h2>
+                <p class="preview">Designing and implementing layered defenses across applications, systems, and networks. Covers access control, security architecture, and defense-in-depth strategies for enterprise environments.</p>
+                <span class="cta-hint">View Project →</span>
+            </a>
 
-            <!-- D828 Legal Issues -->
-            <div class="project-box" id="d828">
-                <h2>Legal Issues in Information Security — D828</h2>
-                <p class="course-focus">Compliance, Privacy & Governance</p>
-                <p class="description">Comprehensive security governance framework covering HIPAA, GDPR, data privacy policies, incident response procedures, and compliance documentation. Delivered as actionable security policies.</p>
-                <div class="pdf-viewer">
-                    <iframe src="assets/pdfs/D828_Legal_Issues_Policies.pdf" title="D828 Policies"></iframe>
-                </div>
-                <a href="assets/pdfs/D828_Legal_Issues_Policies.pdf" download class="download-btn">Download Full Report</a>
-            </div>
+            <a href="project-ethics.html" class="project-card">
+                <h2>Ethics in Technology</h2>
+                <p class="preview">Applying ethical frameworks to real security dilemmas: privacy boundaries, responsible disclosure, and the professional obligations of security practitioners when handling sensitive systems.</p>
+                <span class="cta-hint">View Project →</span>
+            </a>
 
-            <!-- D830 Cryptography -->
-            <div class="project-box" id="d830">
-                <h2>Introduction to Cryptography — D830</h2>
-                <p class="course-focus">Encryption, PKI & Data Protection</p>
-                <p class="description">Applied cryptography concepts including symmetric/asymmetric encryption, public key infrastructure, digital signatures, and secure data protection mechanisms. Lab-based hands-on exercises.</p>
-                <div class="pdf-viewer">
-                    <iframe src="assets/pdfs/D830_Cryptography_Report.pdf" title="D830 Cryptography"></iframe>
-                </div>
-                <a href="assets/pdfs/D830_Cryptography_Report.pdf" download class="download-btn">Download Full Report</a>
-            </div>
+            <a href="project-cryptography.html" class="project-card">
+                <h2>Cryptography</h2>
+                <p class="preview">Working with encryption, hashing, and public key infrastructure to protect data at rest and in transit. Explores symmetric and asymmetric ciphers and how they secure real communications.</p>
+                <span class="cta-hint">View Project →</span>
+            </a>
 
-            <!-- D832 Managing Information Security -->
-            <div class="project-box" id="d832">
-                <h2>Managing Information Security — D832</h2>
-                <p class="course-focus">Risk Management & Security Programs</p>
-                <p class="description">Security program management, risk assessment methodologies, NIST frameworks, and strategic security planning. Includes real-world simulation of security operations and incident management.</p>
-                <div class="pdf-viewer">
-                    <iframe src="assets/pdfs/D832_Managing_Information_Security.pdf" title="D832 Report"></iframe>
-                </div>
-                <a href="assets/pdfs/D832_Managing_Information_Security.pdf" download class="download-btn">Download Full Report</a>
-            </div>
+            <a href="project-policy-compliance.html" class="project-card">
+                <h2>Information Security Policy &amp; Compliance</h2>
+                <p class="preview">Building organizational security policies from the ground up, addressing legal and regulatory obligations, and translating compliance requirements into actionable governance documents.</p>
+                <span class="cta-hint">View Project →</span>
+            </a>
 
-            <!-- D333 Ethics in Technology -->
-            <div class="project-box" id="d333">
-                <h2>Ethics in Technology — D333</h2>
-                <p class="course-focus">Security Ethics & Professional Responsibility</p>
-                <p class="description">Ethical considerations in cybersecurity, responsible disclosure, privacy ethics, and professional standards in security roles. Analysis of real-world security incidents and ethical dilemmas.</p>
-                <div class="pdf-viewer">
-                    <iframe src="assets/pdfs/D333_Ethics_in_Technology.pdf" title="D333 Ethics"></iframe>
-                </div>
-                <a href="assets/pdfs/D333_Ethics_in_Technology.pdf" download class="download-btn">Download Full Report</a>
-            </div>
+            <a href="project-security-program.html" class="project-card">
+                <h2>Security Program Management</h2>
+                <p class="preview">Managing information security at an organizational level: risk assessment, strategic planning, and building a security program that aligns technical controls with business objectives.</p>
+                <span class="cta-hint">View Project →</span>
+            </a>
 
-            <!-- D522 Python Automation -->
-            <div class="project-box" id="d522">
-                <h2>Python for IT Automation — D522</h2>
-                <p class="course-focus">Security Automation & Scripting</p>
-                <p class="description">Practical Python scripting for security automation tasks including log analysis, threat detection, and operational efficiency. Demonstrates real-world SecOps engineering and automation solutions.</p>
-                <div class="pdf-viewer">
-                    <iframe src="assets/pdfs/D522_Python_Automation.pdf" title="D522 Python"></iframe>
-                </div>
-                <a href="assets/pdfs/D522_Python_Automation.pdf" download class="download-btn">Download Full Report</a>
-            </div>
+            <a href="project-network-automation.html" class="project-card">
+                <h2>Network Automation &amp; Monitoring</h2>
+                <p class="preview">Automating DNS monitoring, network device management, and email-based alerting with Python. Scripts detect outages, create tickets, and notify administrators without manual intervention.</p>
+                <span class="cta-hint">View Project →</span>
+            </a>
 
-            <!-- D385 Software Security -->
-            <div class="project-box" id="d385">
-                <h2>Software Security and Testing — D385</h2>
-                <p class="course-focus">Application Security & Secure Development</p>
-                <p class="description">Secure software development practices, vulnerability assessment, penetration testing methodologies, and secure coding principles. Includes hands-on testing and remediation of security flaws.</p>
-                <div class="pdf-viewer">
-                    <iframe src="assets/pdfs/D385_Software_Security.pdf" title="D385 Software Security"></iframe>
-                </div>
-                <a href="assets/pdfs/D385_Software_Security.pdf" download class="download-btn">Download Full Report</a>
-            </div>
+            <a href="project-secure-software.html" class="project-card">
+                <h2>Secure Software Development</h2>
+                <p class="preview">Auditing a web application for vulnerabilities, remediating hardcoded secrets and broken authentication, and validating fixes through automated security testing and static analysis.</p>
+                <span class="cta-hint">View Project →</span>
+            </a>
         </div>
 
         <footer class="catalog-footer">
-            <p>&copy; 2026 Nathaniel Abera. All rights reserved.</p>
-            <p><a href="landing.html">← Back to Home</a></p>
+            <p>&copy; 2026 Nathaniel Abera</p>
+            <p><a href="index.html">← Back to Home</a></p>
         </footer>
     </div>
-
-    <script src="assets/creatures.js"></script>
 </body>
 </html>

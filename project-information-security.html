@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information Systems Security — Cybersecurity Portfolio</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/project.css">
+</head>
+<body>
+    <div class="project-container">
+        <a href="catalog.html" class="back-link">← Back to Projects</a>
+        <header class="project-header">
+            <h1>Information Systems Security</h1>
+            <p class="description">A layered approach to securing an organization's applications, systems, and networks. This project applies access control principles, security architecture, and defense-in-depth strategies, delivering security controls and operational artifacts that demonstrate how to protect enterprise environments against a range of threats.</p>
+        </header>
+
+        <div class="pdf-viewer">
+            <iframe src="assets/pdfs/information-systems-security.pdf#toolbar=0&navpanes=0" title="Information Systems Security"></iframe>
+        </div>
+    </div>
+    <script>
+        // Prevent right-click download on the PDF viewer
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.closest('.pdf-viewer') || e.target.tagName === 'IFRAME') {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

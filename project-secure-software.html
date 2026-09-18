@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Software Development — Cybersecurity Portfolio</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/project.css">
+</head>
+<body>
+    <div class="project-container">
+        <a href="catalog.html" class="back-link">← Back to Projects</a>
+        <header class="project-header">
+            <h1>Secure Software Development</h1>
+            <p class="description">A security audit of a web application followed by remediation. This project identifies vulnerabilities such as hardcoded secrets, plaintext passwords, and broken authentication, then fixes them using secure coding practices and validates the fixes through automated security testing and static analysis tools.</p>
+        </header>
+
+        <div class="pdf-viewer">
+            <iframe src="assets/pdfs/secure-software-development.pdf#toolbar=0&navpanes=0" title="Secure Software Development"></iframe>
+        </div>
+    </div>
+    <script>
+        // Prevent right-click download on the PDF viewer
+        document.addEventListener('contextmenu', function(e) {
+            if (e.target.closest('.pdf-viewer') || e.target.tagName === 'IFRAME') {
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
