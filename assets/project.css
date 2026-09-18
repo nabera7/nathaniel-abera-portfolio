@@ -114,25 +114,28 @@ body {
 }
 
 .doc-toggle .doc-label {
-    font-size: 1.1rem;
+    font-size: 1.35rem;
     font-weight: 700;
     color: #ffffff;
     letter-spacing: 0.5px;
-    text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+    display: block;
+    margin-bottom: 10px;
 }
 
 .doc-toggle .doc-hint {
-    font-size: 1.1rem;
-    color: #ffffff;
-    margin-top: 10px;
+    font-size: 0.95rem;
+    color: #b0b0b0;
+    margin-top: 0;
     font-weight: 300;
-    line-height: 1.5;
+    line-height: 1.7;
+}
+
+.doc-toggle .doc-hint {
+    /* description is normal-sized, lighter, no hyphen */
 }
 
 .doc-toggle .doc-hint::before {
-    content: '— ';
-    color: #38bdf8;
-    font-weight: 700;
+    content: none;
 }
 
 .doc-toggle .view-prompt {
