@@ -39,9 +39,17 @@ body {
     color: #38bdf8;
     text-decoration: none;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     letter-spacing: 1px;
     transition: color 0.2s;
+}
+
+.back-link .arr {
+    font-size: 1.4em;
+    line-height: 0;
+    position: relative;
+    top: 0.05em;
+    margin-right: 6px;
 }
 
 .back-link:hover {
