@@ -14,7 +14,7 @@ body {
     color: #fff;
     overflow: hidden;
     height: 100vh;
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M7 2L2 16l6-2 4 10 4-10 6 2L7 2z" fill="%2300FF44" stroke="%2300CC33" stroke-width="1"/></svg>') 7 2, auto;
+    
 }
 
 canvas {
@@ -91,7 +91,7 @@ h1 {
     letter-spacing: 1px;
     background: #ffffff;
     color: #000000;
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><path d="M7 2L2 16l6-2 4 10 4-10 6 2L7 2z" fill="%2300FF44" stroke="%2300CC33" stroke-width="1"/></svg>') 7 2, pointer;
+    
     transition: all 0.2s ease;
     position: relative;
     overflow: hidden;
