@@ -14,7 +14,7 @@ body {
     color: #fff;
     overflow: hidden;
     height: 100vh;
-    cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAABJklEQVR4nN2ZDQrDIAyFk4eH6WF63B1mt8nAbkOK6/qTxKQPLMWfp19jRZToNno8paZkQn22A08GAUou1Oc88TdnniiTuHkXkWX2MPO6LNcUkgVEUv8DkgQCW4UZIPCvQnQI7KkUGQJ7K0aFwJHKESFwtEE0CJxpFAkCZxtGgQAlF640jhAFXDUYDQENk5EQ0DIaBQFNsxEQ0Db0hoCFqScErIy9IGBp7gEBMpY1BMhBlhAgJ1lBFDLS+2ypJ9E8cyqGA+VMm7nPgNvkIlByQcPkFrvRUYKW0S220yMEzaVzRBSK0pofOwLM3N7a1BQlCjg48F3yhCi9zObrxpszW5d8P/K39L0Y7MnjsrCs+6RkYgWPoVEAJResO7BekVjJpzuNPFazF9EFkC/xjJddAAAAAElFTkSuQmCC') 4 4, auto;
+    cursor: url('assets/kali_cursor_anim.gif') 2 2, auto;
 }
 
 canvas {
