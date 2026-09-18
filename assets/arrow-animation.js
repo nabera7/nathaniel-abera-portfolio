@@ -24,17 +24,22 @@ function drawCurvedArrow(progress) {
     const subtitleRect = subtitle.getBoundingClientRect();
     const buttonRect = button.getBoundingClientRect();
 
-    // Start from the RIGHT SIDE of the subtitle (close to the word)
-    const startX = subtitleRect.right + 8;
+    // Start flush at the RIGHT SIDE of the subtitle, vertically centered
+    const startX = subtitleRect.right + 4;
     const startY = subtitleRect.top + subtitleRect.height / 2;
 
-    // End at the RIGHT side of the button
-    const endX = buttonRect.right + 15;
+    // End at the RIGHT side of the button, vertically centered
+    const endX = buttonRect.right + 10;
     const endY = buttonRect.top + buttonRect.height / 2;
 
-    // Control point for curve (makes it swoop out to the right then back)
-    const controlX = Math.max(startX, endX) + 120;
-    const controlY = (startY + endY) / 2;
+    // Cubic Bézier control points:
+    //  c1 extends horizontally right from the start (so the arrow exits
+    //     straight out of the side, not angled up/down)
+    //  c2 guides the curve down into the button from the right
+    const c1x = startX + 70;
+    const c1y = startY;
+    const c2x = endX + 40;
+    const c2y = endY;
 
     arrowCtx.strokeStyle = '#FF0000';
     arrowCtx.lineWidth = 3;
@@ -45,20 +50,14 @@ function drawCurvedArrow(progress) {
     arrowCtx.beginPath();
     arrowCtx.moveTo(startX, startY);
 
-    // Calculate curve position based on progress
     let lastX = startX;
     let lastY = startY;
 
     for (let t = 0; t <= progress; t += 0.01) {
-        // Quadratic Bézier curve formula
-        const x =
-            Math.pow(1 - t, 2) * startX +
-            2 * (1 - t) * t * controlX +
-            Math.pow(t, 2) * endX;
-        const y =
-            Math.pow(1 - t, 2) * startY +
-            2 * (1 - t) * t * controlY +
-            Math.pow(t, 2) * endY;
+        // Cubic Bézier curve formula
+        const u = 1 - t;
+        const x = u*u*u*startX + 3*u*u*t*c1x + 3*u*t*t*c2x + t*t*t*endX;
+        const y = u*u*u*startY + 3*u*u*t*c1y + 3*u*t*t*c2y + t*t*t*endY;
 
         arrowCtx.lineTo(x, y);
         lastX = x;
@@ -72,14 +71,9 @@ function drawCurvedArrow(progress) {
         const headlen = 18;
         // Angle based on the tangent of the curve near the end
         const prevT = Math.max(0, progress - 0.05);
-        const prevX =
-            Math.pow(1 - prevT, 2) * startX +
-            2 * (1 - prevT) * prevT * controlX +
-            Math.pow(prevT, 2) * endX;
-        const prevY =
-            Math.pow(1 - prevT, 2) * startY +
-            2 * (1 - prevT) * prevT * controlY +
-            Math.pow(prevT, 2) * endY;
+        const u2 = 1 - prevT;
+        const prevX = u2*u2*u2*startX + 3*u2*u2*prevT*c1x + 3*u2*prevT*prevT*c2x + prevT*prevT*prevT*endX;
+        const prevY = u2*u2*u2*startY + 3*u2*u2*prevT*c1y + 3*u2*prevT*prevT*c2y + prevT*prevT*prevT*endY;
         const angle = Math.atan2(lastY - prevY, lastX - prevX);
 
         arrowCtx.fillStyle = '#FF0000';
