@@ -167,18 +167,45 @@
             u.beamPhase += 0.08;
 
             // Gentle magnetic repulsion around the content zone (soft force field)
+            // Two nested zones: a stronger inner zone for the name/subtitle
             var dx = u.x - zone.cx;
             var dy = u.y - zone.cy;
             var dist = Math.sqrt(dx * dx + dy * dy);
-            var influence = zone.rx * 1.1; // radius of the repulsion field
+            var influence = zone.rx * 1.1; // outer repulsion field
+
+            // Inner (stronger) zone centered on the name/subtitle (above center)
+            var nameCx = zone.cx;
+            var nameCy = zone.cy - zone.ry * 0.4;
+            var nameRx = zone.rx * 0.75;
+            var nameRy = zone.ry * 0.45;
+
+            var push = { x: 0, y: 0 };
+
             if (dist < influence && dist > 0) {
-                // Soft inverse-square-ish push away, scaled to stay subtle
-                var strength = (1 - dist / influence) * 0.6;
+                var strength = (1 - dist / influence) * 0.9; // increased base strength
                 var nx = dx / dist;
                 var ny = dy / dist;
-                u.x += nx * strength;
-                u.y += ny * strength;
+                push.x += nx * strength;
+                push.y += ny * strength;
             }
+
+            // Stronger repulsion (1.5x) for the name/subtitle zone
+            var ndx = u.x - nameCx;
+            var ndy = u.y - nameCy;
+            // elliptical distance for the inner zone
+            var ex = ndx / nameRx;
+            var ey = ndy / nameRy;
+            var edist = Math.sqrt(ex * ex + ey * ey);
+            if (edist < 1 && edist > 0) {
+                var nstrength = (1 - edist) * 1.35; // 1.5x the base
+                var enx = ex / edist;
+                var eny = ey / edist;
+                push.x += enx * nstrength;
+                push.y += eny * nstrength;
+            }
+
+            u.x += push.x;
+            u.y += push.y;
 
             drawUfo(u);
             var margin = 130;
