@@ -1,0 +1,11 @@
+name: Nathaniel Abera — Cybersecurity Projects
+description: Performance Assessment Portfolio from Western Governors University
+theme: jekyll-theme-minimal
+github:
+  is_project_page: false
+include:
+  - assets
+exclude:
+  - node_modules
+  - .git
+  - .gitignore
