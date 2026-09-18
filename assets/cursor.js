@@ -1,78 +1,56 @@
-// Custom large Kali Linux-style cursor drawn on canvas
-// Runs in <head>, so wait for DOM ready before appending canvas
+// Reliable custom cursor via canvas (works over everything)
 (function() {
-    function initCursor() {
-        // Hide native cursor via CSS
-        const style = document.createElement('style');
-        style.textContent = '* { cursor: none !important; }';
-        document.head.appendChild(style);
+    // Hide native cursor
+    var style = document.createElement('style');
+    style.textContent = '* { cursor: none !important; }';
+    document.head.appendChild(style);
 
-        const cursorCanvas = document.createElement('canvas');
-        cursorCanvas.style.cssText = 'position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;';
-        document.body.appendChild(cursorCanvas);
+    // Load cursor images
+    var normalImg = new Image();
+    normalImg.src = 'assets/cursor_normal2.png';
+    var clickImg = new Image();
+    clickImg.src = 'assets/cursor_effect_no.png';
 
-        const cursorCtx = cursorCanvas.getContext('2d');
-        let mouseX = -100;
-        let mouseY = -100;
-        let cursorVisible = false;
+    // Create cursor canvas at top z-index
+    var canvas = document.createElement('canvas');
+    canvas.style.cssText = 'position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999;';
+    document.body.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
 
-        function resizeCursorCanvas() {
-            cursorCanvas.width = window.innerWidth;
-            cursorCanvas.height = window.innerHeight;
+    var mx = -100, my = -100;
+    var isDown = false;
+
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    document.addEventListener('mousemove', function(e) {
+        mx = e.clientX;
+        my = e.clientY;
+    });
+    document.addEventListener('mousedown', function() { isDown = true; });
+    document.addEventListener('mouseup', function() { isDown = false; });
+    document.addEventListener('mouseleave', function() { mx = -100; my = -100; });
+
+    // Hotspot: (22, 0) from the .cur files
+    var hotX = 22, hotY = 0;
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (mx < 0 || my < 0) {
+            requestAnimationFrame(draw);
+            return;
         }
-        resizeCursorCanvas();
-
-        document.addEventListener('mousemove', function(e) {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursorVisible = true;
-        });
-
-        document.addEventListener('mouseleave', function() {
-            cursorVisible = false;
-        });
-
-        document.addEventListener('mouseenter', function() {
-            cursorVisible = true;
-        });
-
-        function drawCursor() {
-            cursorCtx.clearRect(0, 0, cursorCanvas.width, cursorCanvas.height);
-            if (cursorVisible) {
-                const scale = 2;
-                cursorCtx.save();
-                cursorCtx.translate(mouseX, mouseY);
-                cursorCtx.scale(scale, scale);
-
-                cursorCtx.fillStyle = '#ffffff';
-                cursorCtx.strokeStyle = '#000000';
-                cursorCtx.lineWidth = 1.2;
-
-                cursorCtx.beginPath();
-                cursorCtx.moveTo(0, 0);
-                cursorCtx.lineTo(0, 12);
-                cursorCtx.lineTo(3.5, 10.5);
-                cursorCtx.lineTo(5.5, 15);
-                cursorCtx.lineTo(7.5, 13.5);
-                cursorCtx.lineTo(5, 8.5);
-                cursorCtx.lineTo(8, 8);
-                cursorCtx.closePath();
-                cursorCtx.fill();
-                cursorCtx.stroke();
-
-                cursorCtx.restore();
-            }
-
-            requestAnimationFrame(drawCursor);
+        var img = isDown ? clickImg : normalImg;
+        if (img.complete && img.naturalWidth > 0) {
+            ctx.drawImage(img, mx - hotX, my - hotY);
         }
-
-        window.addEventListener('resize', resizeCursorCanvas);
-        drawCursor();
+        requestAnimationFrame(draw);
     }
 
-    if (document.body) {
-        initCursor();
-    } else {
-        document.addEventListener('DOMContentLoaded', initCursor);
-    }
+    // Start when images ready
+    draw();
 })();
