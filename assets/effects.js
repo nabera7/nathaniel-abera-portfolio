@@ -1,4 +1,4 @@
-// Effects canvas for shooting star, explosion, swirl
+// Effects canvas for warp-speed transition
 const effectsCanvas = document.getElementById('effects');
 const effectsCtx = effectsCanvas.getContext('2d');
 const button = document.getElementById('cta-button');
@@ -6,204 +6,99 @@ const button = document.getElementById('cta-button');
 effectsCanvas.width = window.innerWidth;
 effectsCanvas.height = window.innerHeight;
 
-let shootingStar = null;
-let explosionParticles = [];
 let isTransitioning = false;
+let warpProgress = 0; // 0 -> 1
+let warpRunning = false;
 
-class ShootingStar {
-    constructor(startX, startY) {
-        this.x = startX;
-        this.y = startY;
-        this.vx = Math.random() * 8 + 5;
-        this.vy = Math.random() * -8 - 5;
-        this.length = 80;
-        this.opacity = 1;
-        this.life = 60;
-    }
+// Star-shaped streak lines radiating from center (hyperspace/warp)
+const warpStars = [];
+const WARP_COUNT = 300;
+for (let i = 0; i < WARP_COUNT; i++) {
+    warpStars.push({
+        angle: Math.random() * Math.PI * 2,
+        dist: Math.random(),          // starting radius fraction
+        speed: 0.015 + Math.random() * 0.035,
+        length: 0.1 + Math.random() * 0.25,
+        thickness: 1 + Math.random() * 2.5,
+        hueShift: Math.random()
+    });
+}
 
-    update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        this.life--;
-        this.opacity = this.life / 60;
-    }
+function drawWarp() {
+    const cx = effectsCanvas.width / 2;
+    const cy = effectsCanvas.height / 2;
+    const maxR = Math.max(effectsCanvas.width, effectsCanvas.height) * 0.75;
 
-    draw() {
-        const gradient = effectsCtx.createLinearGradient(
-            this.x - this.vx * 3,
-            this.y - this.vy * 3,
-            this.x,
-            this.y
-        );
-        gradient.addColorStop(0, `rgba(14, 165, 233, 0)`);
-        gradient.addColorStop(1, `rgba(14, 165, 233, ${this.opacity})`);
+    // Fading trail (stretch lines get longer as we accelerate)
+    effectsCtx.clearRect(0, 0, effectsCanvas.width, effectsCanvas.height);
 
-        effectsCtx.strokeStyle = gradient;
-        effectsCtx.lineWidth = 3;
+    for (const s of warpStars) {
+        // Each star moves outward; dist represents how far along it is
+        const r = s.dist * maxR;
+        const streakLen = s.length * maxR * (0.3 + warpProgress * 1.5);
+        const x1 = cx + Math.cos(s.angle) * r;
+        const y1 = cy + Math.sin(s.angle) * r;
+        const x2 = cx + Math.cos(s.angle) * (r - streakLen);
+        const y2 = cy + Math.sin(s.angle) * (r - streakLen);
+
+        // Color interpolates from white-center to blue-ish tail as we warp
+        const alpha = Math.min(1, 0.4 + warpProgress * 0.6);
+        const g = effectsCtx.createLinearGradient(x1, y1, x2, y2);
+        g.addColorStop(0, `rgba(255, 255, 255, ${alpha})`);
+        g.addColorStop(0.5, `rgba(120, 200, 255, ${alpha * 0.7})`);
+        g.addColorStop(1, `rgba(56, 189, 248, 0)`);
+
+        effectsCtx.strokeStyle = g;
+        effectsCtx.lineWidth = s.thickness * (0.7 + warpProgress * 0.8);
+        effectsCtx.lineCap = 'round';
         effectsCtx.beginPath();
-        effectsCtx.moveTo(
-            this.x - this.vx * 3,
-            this.y - this.vy * 3
-        );
-        effectsCtx.lineTo(this.x, this.y);
+        effectsCtx.moveTo(x1, y1);
+        effectsCtx.lineTo(x2, y2);
         effectsCtx.stroke();
     }
-
-    isDead() {
-        return this.life <= 0;
-    }
 }
 
-class ExplosionParticle {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.vx = (Math.random() - 0.5) * 12;
-        this.vy = (Math.random() - 0.5) * 12;
-        this.life = 40;
-        this.maxLife = 40;
-        this.size = Math.random() * 4 + 2;
-    }
+function startWarp() {
+    warpRunning = true;
+    warpProgress = 0;
 
-    update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        this.vy += 0.3; // gravity
-        this.life--;
+    // Hide the content (fade the hero out as warp begins)
+    const hero = document.querySelector('.hero-container');
+    if (hero) {
+        hero.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        hero.style.opacity = '0';
+        hero.style.transform += ' scale(0.9)';
     }
-
-    draw() {
-        const opacity = this.life / this.maxLife;
-        effectsCtx.fillStyle = `rgba(14, 165, 233, ${opacity})`;
-        effectsCtx.beginPath();
-        effectsCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        effectsCtx.fill();
-    }
-
-    isDead() {
-        return this.life <= 0;
-    }
+    button.disabled = true;
+    button.style.pointerEvents = 'none';
 }
 
-// Button click handler
 button.addEventListener('click', (e) => {
     e.preventDefault();
     if (isTransitioning) return;
     isTransitioning = true;
-
-    const rect = button.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-
-    // Create shooting star from button
-    shootingStar = new ShootingStar(centerX, centerY);
-
-    // Create explosion particles
-    for (let i = 0; i < 30; i++) {
-        explosionParticles.push(new ExplosionParticle(centerX, centerY));
-    }
-
-    // Hide button
-    button.style.opacity = '0';
-    button.style.pointerEvents = 'none';
-    button.disabled = true;
-
-    // Fade to black and transition after 1.5 seconds
-    setTimeout(() => {
-        startSwirl();
-    }, 1500);
+    startWarp();
 });
-
-let swirls = [];
-
-class Swirl {
-    constructor() {
-        this.x = effectsCanvas.width / 2;
-        this.y = effectsCanvas.height / 2;
-        this.radius = 0;
-        this.maxRadius = Math.max(effectsCanvas.width, effectsCanvas.height) * 1.5;
-        this.opacity = 0.8;
-        this.expandSpeed = 20;
-    }
-
-    update() {
-        this.radius += this.expandSpeed;
-        this.opacity -= 0.02;
-    }
-
-    draw() {
-        effectsCtx.strokeStyle = `rgba(14, 165, 233, ${this.opacity})`;
-        effectsCtx.lineWidth = 3;
-        effectsCtx.beginPath();
-        effectsCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        effectsCtx.stroke();
-    }
-
-    isDone() {
-        return this.radius >= this.maxRadius || this.opacity <= 0;
-    }
-}
-
-function startSwirl() {
-    // Create multiple swirl rings
-    for (let i = 0; i < 5; i++) {
-        setTimeout(() => {
-            swirls.push(new Swirl());
-        }, i * 100);
-    }
-
-    // Fade to black
-    const fadeOverlay = document.createElement('div');
-    fadeOverlay.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: black;
-        opacity: 0;
-        z-index: 4;
-        transition: opacity 2s ease;
-        pointer-events: none;
-    `;
-    document.body.appendChild(fadeOverlay);
-
-    setTimeout(() => {
-        fadeOverlay.style.opacity = '1';
-    }, 100);
-
-    // Redirect after transition
-    setTimeout(() => {
-        window.location.href = 'catalog.html';
-    }, 3000);
-}
 
 // Animation loop
 function animateEffects() {
-    effectsCtx.clearRect(0, 0, effectsCanvas.width, effectsCanvas.height);
-
-    // Update and draw shooting star
-    if (shootingStar) {
-        shootingStar.update();
-        shootingStar.draw();
-        if (shootingStar.isDead()) {
-            shootingStar = null;
+    if (warpRunning) {
+        warpProgress += 0.018;
+        if (warpProgress >= 1) {
+            warpProgress = 1;
+            warpRunning = false;
+            // Warp complete — navigate
+            setTimeout(() => {
+                window.location.href = 'catalog.html';
+            }, 250);
         }
     }
 
-    // Update and draw explosion particles
-    explosionParticles = explosionParticles.filter(p => !p.isDead());
-    explosionParticles.forEach(p => {
-        p.update();
-        p.draw();
-    });
-
-    // Update and draw swirls
-    swirls = swirls.filter(s => !s.isDone());
-    swirls.forEach(s => {
-        s.update();
-        s.draw();
-    });
+    if (warpProgress > 0) {
+        drawWarp();
+    } else {
+        effectsCtx.clearRect(0, 0, effectsCanvas.width, effectsCanvas.height);
+    }
 
     requestAnimationFrame(animateEffects);
 }
