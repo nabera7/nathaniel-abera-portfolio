@@ -3,14 +3,14 @@
 (function() {
     // --- Rain canvas (bottom layer, with fade trail) ---
     var rainCanvas = document.createElement('canvas');
-    rainCanvas.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;';
+    rainCanvas.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;';
     document.body.insertBefore(rainCanvas, document.body.firstChild);
     var rctx = rainCanvas.getContext('2d');
 
     // --- Stars canvas (top layer, persistent twinkle, never faded) ---
     var starCanvas = document.createElement('canvas');
-    starCanvas.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;';
-    document.body.insertBefore(starCanvas, rainCanvas.nextSibling);
+    starCanvas.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2;';
+    document.body.appendChild(starCanvas);
     var sctx = starCanvas.getContext('2d');
 
     function resize() {
@@ -26,13 +26,13 @@
     var stars = [];
     function initStars() {
         stars = [];
-        for (var i = 0; i < 180; i++) {
+        for (var i = 0; i < 200; i++) {
             stars.push({
                 x: Math.random() * starCanvas.width,
                 y: Math.random() * starCanvas.height,
-                r: Math.random() * 1.4 + 0.3,
-                o: Math.random() * 0.7 + 0.3,
-                sp: Math.random() * 0.02 + 0.005,
+                r: Math.random() * 1.6 + 0.4,
+                o: Math.random() * 0.4 + 0.5,
+                sp: Math.random() * 0.015 + 0.003,
                 dir: Math.random() > 0.5 ? 1 : -1
             });
         }
@@ -44,7 +44,7 @@
         for (var i = 0; i < stars.length; i++) {
             var s = stars[i];
             s.o += s.sp * s.dir;
-            if (s.o >= 1 || s.o <= 0.2) s.dir *= -1;
+            if (s.o >= 1 || s.o <= 0.4) s.dir *= -1;
             sctx.fillStyle = 'rgba(255, 255, 255, ' + s.o + ')';
             sctx.beginPath();
             sctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);

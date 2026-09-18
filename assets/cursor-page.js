@@ -30,7 +30,6 @@
 
     var mx = -100, my = -100;
     var isDown = false;
-    var overClickable = false;
     var downTimer = null;
 
     function resize() {
@@ -40,25 +39,9 @@
     resize();
     window.addEventListener('resize', resize);
 
-    // Detect if element is clickable (link, button, or has explicit role)
-    function isClickable(el) {
-        if (!el) return false;
-        var tag = el.tagName ? el.tagName.toLowerCase() : '';
-        if (tag === 'a' || tag === 'button') return true;
-        // Walk up to find clickable ancestor
-        var node = el;
-        while (node && node !== document.body) {
-            var t = node.tagName ? node.tagName.toLowerCase() : '';
-            if (t === 'a' || t === 'button') return true;
-            node = node.parentElement;
-        }
-        return false;
-    }
-
     document.addEventListener('mousemove', function(e) {
         mx = e.clientX;
         my = e.clientY;
-        overClickable = isClickable(e.target);
     });
     document.addEventListener('mousedown', function() {
         isDown = true;
@@ -78,7 +61,7 @@
             requestAnimationFrame(draw);
             return;
         }
-        var img = (isDown || overClickable) ? clickImg : normalImg;
+        var img = isDown ? clickImg : normalImg;
         if (img.complete && img.naturalWidth > 0) {
             ctx.drawImage(img, mx - hotX, my - hotY);
         }
