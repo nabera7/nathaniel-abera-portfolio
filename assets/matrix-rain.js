@@ -84,7 +84,8 @@
 
     function drawRain() {
         // Fade overlay only on the side columns so center stays clear for stars
-        var sideRatio = 0.22;
+        // Wide clear center so catalog content is readable
+        var sideRatio = 0.14;
         var leftB = Math.floor(columns * sideRatio);
         var rightB = Math.floor(columns * (1 - sideRatio));
 

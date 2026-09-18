@@ -29,12 +29,17 @@ body {
 }
 
 .catalog-header .owner {
+    display: inline-block;
+    font-family: 'Segoe UI', 'Inter', sans-serif;
     font-size: 0.95rem;
     color: #38bdf8;
     letter-spacing: 3px;
     text-transform: uppercase;
     font-weight: 700;
     margin-bottom: 0.75rem;
+    background: #0a0a0a;
+    padding: 0.5em 1.4em;
+    border-radius: 50px;
 }
 
 .catalog-header h1 {
@@ -48,7 +53,7 @@ body {
 }
 
 .catalog-header p {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     color: #ffffff;
     max-width: 800px;
     margin: 0 auto;
