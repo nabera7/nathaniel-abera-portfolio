@@ -14,7 +14,7 @@ body {
     color: #fff;
     overflow: hidden;
     height: 100vh;
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 3l18 9-18 10V12H1V7h2V3z" fill="%2300FF44" stroke="%2300CC33" stroke-width="1"/></svg>') 2 2, auto;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2l5 12-4-1-2 7-2-7-4 1z" fill="%2300FF44" stroke="%2300CC33" stroke-width="1"/></svg>') 12 4, auto;
 }
 
 canvas {
@@ -90,7 +90,7 @@ h1 {
     letter-spacing: 1px;
     background: #ffffff;
     color: #000000;
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 3l18 9-18 10V12H1V7h2V3z" fill="%2300FF44" stroke="%2300CC33" stroke-width="1"/></svg>') 2 2, pointer;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2l5 12-4-1-2 7-2-7-4 1z" fill="%2300FF44" stroke="%2300CC33" stroke-width="1"/></svg>') 12 4, pointer;
     transition: all 0.2s ease;
     position: relative;
     overflow: hidden;
