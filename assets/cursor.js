@@ -1,90 +1,73 @@
 // Custom large Kali Linux-style cursor drawn on canvas
-const cursorCanvas = document.createElement('canvas');
-cursorCanvas.id = 'cursor-layer';
-cursorCanvas.style.cssText = 'position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;';
-document.body.appendChild(cursorCanvas);
+(function() {
+    // Hide native cursor via CSS only (no per-element JS needed)
+    const style = document.createElement('style');
+    style.textContent = '* { cursor: none !important; }';
+    document.head.appendChild(style);
 
-const cursorCtx = cursorCanvas.getContext('2d');
-let mouseX = window.innerWidth / 2;
-let mouseY = window.innerHeight / 2;
-let cursorVisible = false;
+    const cursorCanvas = document.createElement('canvas');
+    cursorCanvas.style.cssText = 'position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;';
+    document.body.appendChild(cursorCanvas);
 
-function resizeCursorCanvas() {
-    cursorCanvas.width = window.innerWidth;
-    cursorCanvas.height = window.innerHeight;
-}
-resizeCursorCanvas();
+    const cursorCtx = cursorCanvas.getContext('2d');
+    let mouseX = -100;
+    let mouseY = -100;
+    let cursorVisible = false;
 
-// Hide native cursor everywhere
-document.body.style.cursor = 'none';
-document.querySelectorAll('*').forEach(el => {
-    el.style.cursor = 'none';
-});
-
-// Track mouse
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    cursorVisible = true;
-    cursorCanvas.style.display = 'block';
-});
-
-document.addEventListener('mouseleave', () => {
-    cursorVisible = false;
-    cursorCanvas.style.display = 'none';
-});
-
-// Keep hiding native cursor on dynamically added elements
-const observer = new MutationObserver(() => {
-    const els = document.querySelectorAll('*');
-    for (let i = 0; i < els.length; i++) {
-        els[i].style.cursor = 'none';
+    function resizeCursorCanvas() {
+        cursorCanvas.width = window.innerWidth;
+        cursorCanvas.height = window.innerHeight;
     }
-});
-observer.observe(document.body, { childList: true, subtree: true });
+    resizeCursorCanvas();
 
-// Draw Kali Linux-style cursor (sharp black/white arrow, Kali-green accent)
-function drawCursor() {
-    cursorCtx.clearRect(0, 0, cursorCanvas.width, cursorCanvas.height);
-    if (!cursorVisible) return;
+    document.addEventListener('mousemove', function(e) {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorVisible = true;
+    });
 
-    const x = mouseX;
-    const y = mouseY;
-    const scale = 2;
+    document.addEventListener('mouseleave', function() {
+        cursorVisible = false;
+    });
 
-    cursorCtx.save();
-    cursorCtx.translate(x, y);
-    cursorCtx.scale(scale, scale);
+    document.addEventListener('mouseenter', function() {
+        cursorVisible = true;
+    });
 
-    // Kali-style: white outer, black border, sharp arrow
-    cursorCtx.fillStyle = '#ffffff';
-    cursorCtx.strokeStyle = '#000000';
-    cursorCtx.lineWidth = 1.2;
+    function drawCursor() {
+        cursorCtx.clearRect(0, 0, cursorCanvas.width, cursorCanvas.height);
+        if (!cursorVisible) {
+            requestAnimationFrame(drawCursor);
+            return;
+        }
 
-    // Classic sharp arrow pointer (points up-left)
-    cursorCtx.beginPath();
-    cursorCtx.moveTo(0, 0);        // tip
-    cursorCtx.lineTo(0, 12);       // down left edge
-    cursorCtx.lineTo(3.5, 10.5);   // inner notch
-    cursorCtx.lineTo(5.5, 15);     // tail
-    cursorCtx.lineTo(7.5, 13.5);   // tail underside
-    cursorCtx.lineTo(5, 8.5);      // inner notch bottom
-    cursorCtx.lineTo(8, 8);        // right edge
-    cursorCtx.closePath();
-    cursorCtx.fill();
-    cursorCtx.stroke();
+        const scale = 2;
+        cursorCtx.save();
+        cursorCtx.translate(mouseX, mouseY);
+        cursorCtx.scale(scale, scale);
 
-    // Kali-green dot at the tip
-    cursorCtx.fillStyle = '#00B4D8';
-    cursorCtx.beginPath();
-    cursorCtx.arc(0, 0, 1.5, 0, Math.PI * 2);
-    cursorCtx.fill();
+        // Kali-style: white fill, black outline, sharp arrow
+        cursorCtx.fillStyle = '#ffffff';
+        cursorCtx.strokeStyle = '#000000';
+        cursorCtx.lineWidth = 1.2;
 
-    cursorCtx.restore();
+        cursorCtx.beginPath();
+        cursorCtx.moveTo(0, 0);
+        cursorCtx.lineTo(0, 12);
+        cursorCtx.lineTo(3.5, 10.5);
+        cursorCtx.lineTo(5.5, 15);
+        cursorCtx.lineTo(7.5, 13.5);
+        cursorCtx.lineTo(5, 8.5);
+        cursorCtx.lineTo(8, 8);
+        cursorCtx.closePath();
+        cursorCtx.fill();
+        cursorCtx.stroke();
 
-    requestAnimationFrame(drawCursor);
-}
+        cursorCtx.restore();
 
-window.addEventListener('resize', resizeCursorCanvas);
+        requestAnimationFrame(drawCursor);
+    }
 
-drawCursor();
+    window.addEventListener('resize', resizeCursorCanvas);
+    drawCursor();
+})();
