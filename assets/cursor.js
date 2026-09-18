@@ -19,6 +19,7 @@
 
     var mx = -100, my = -100;
     var isDown = false;
+    var downTimer = null;
 
     function resize() {
         canvas.width = window.innerWidth;
@@ -31,8 +32,15 @@
         mx = e.clientX;
         my = e.clientY;
     });
-    document.addEventListener('mousedown', function() { isDown = true; });
-    document.addEventListener('mouseup', function() { isDown = false; });
+    document.addEventListener('mousedown', function() { 
+        isDown = true; 
+        if (downTimer) clearTimeout(downTimer);
+    });
+    document.addEventListener('mouseup', function() { 
+        // Keep effect visible briefly after click so it's noticeable
+        if (downTimer) clearTimeout(downTimer);
+        downTimer = setTimeout(function() { isDown = false; }, 120);
+    });
     document.addEventListener('mouseleave', function() { mx = -100; my = -100; });
 
     // Hotspot: (22, 0) from the .cur files
