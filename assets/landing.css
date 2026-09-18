@@ -65,7 +65,6 @@ h1 {
     font-weight: 700;
     margin: 0;
     text-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
-    letter-spacing: 2px;
     color: #fff;
     animation: breathe 4s ease-in-out infinite;
 }
@@ -75,7 +74,6 @@ h1 {
     font-weight: 700;
     margin: 0;
     color: #ffffff;
-    letter-spacing: 3px;
     text-transform: uppercase;
     text-shadow: 0 0 20px rgba(14, 165, 233, 0.7), 0 0 10px rgba(14, 165, 233, 0.5);
     animation: breathe 4s ease-in-out infinite;
@@ -87,7 +85,6 @@ h1 {
     font-size: 1rem;
     font-family: 'Inter', sans-serif;
     font-weight: 700;
-    letter-spacing: 1px;
     background: #ffffff;
     color: #000000;
     
