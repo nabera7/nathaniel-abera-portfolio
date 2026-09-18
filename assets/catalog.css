@@ -86,13 +86,14 @@ body {
 }
 
 .project-card {
-    display: block;
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
-    background: #000;
+    background: #000000;
     border: 1px solid #38bdf8;
     padding: 35px 30px;
     color: #fff;
-    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    transition: transform 0.3s ease;
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -100,7 +101,7 @@ body {
 
 .project-card:hover {
     transform: translateY(-6px);
-    background: #111;
+    background: #000000;
     animation: cardRgb 1.2s linear infinite;
     box-shadow: 0 0 35px rgba(56, 189, 248, 0.5);
 }
@@ -119,11 +120,36 @@ body {
     color: #ffffff;
     line-height: 1.7;
     font-weight: 300;
+    margin-bottom: 18px;
+}
+
+.project-card .highlights {
+    list-style: none;
+    margin: 0 0 20px 0;
+    padding: 0;
+    flex-grow: 1;
+}
+
+.project-card .highlights li {
+    font-size: 0.9rem;
+    color: #38bdf8;
+    line-height: 1.5;
+    font-weight: 400;
+    padding-left: 18px;
+    position: relative;
+    margin-bottom: 6px;
+}
+
+.project-card .highlights li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #38bdf8;
 }
 
 .project-card .cta-hint {
     display: inline-block;
-    margin-top: 20px;
+    margin-top: auto;
     font-size: 0.85rem;
     font-weight: 600;
     color: #38bdf8;
