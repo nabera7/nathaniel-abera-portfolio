@@ -14,7 +14,7 @@ body {
     color: #fff;
     overflow: hidden;
     height: 100vh;
-    cursor: url('assets/kali_cursor_anim.gif') 2 2, auto;
+    cursor: url('assets/kali_cursor_static.png') 4 4, auto;
 }
 
 canvas {
