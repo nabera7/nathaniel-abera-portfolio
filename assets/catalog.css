@@ -40,7 +40,7 @@ body {
 
 .catalog-header p {
     font-size: 1.1rem;
-    color: #a0a0a0;
+    color: #ffffff;
     max-width: 800px;
     margin: 0 auto;
     line-height: 1.8;
@@ -58,10 +58,9 @@ body {
     text-decoration: none;
     background: #0a0a0a;
     border: 2px solid #38bdf8;
-    border-radius: 12px;
     padding: 35px 30px;
     color: #fff;
-    transition: all 0.3s ease;
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -98,13 +97,6 @@ body {
     color: #38bdf8;
     letter-spacing: 1px;
     text-transform: uppercase;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.project-card:hover .cta-hint {
-    opacity: 1;
-    animation: textRgb 1.2s linear infinite;
 }
 
 .catalog-footer {
@@ -121,7 +113,7 @@ body {
     font-weight: 600;
 }
 
-/* RGB spectrum dance on card outline + text */
+/* RGB spectrum dance on card outline only */
 @keyframes cardRgb {
     0%   { border-color: #ff0000; }
     16%  { border-color: #ff7f00; }
@@ -130,16 +122,6 @@ body {
     66%  { border-color: #0080ff; }
     83%  { border-color: #8000ff; }
     100% { border-color: #ff0000; }
-}
-
-@keyframes textRgb {
-    0%   { color: #ff0000; }
-    16%  { color: #ff7f00; }
-    33%  { color: #ffff00; }
-    50%  { color: #00ff00; }
-    66%  { color: #0080ff; }
-    83%  { color: #8000ff; }
-    100% { color: #ff0000; }
 }
 
 @media (max-width: 768px) {

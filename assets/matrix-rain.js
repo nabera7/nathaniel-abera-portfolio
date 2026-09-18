@@ -1,4 +1,4 @@
-// Unified catalog background: starfield + multilingual rain (sides) + animated cloud (center)
+// Unified catalog background: starfield + multilingual rain (sides), trailing effect
 (function() {
     var canvas = document.createElement('canvas');
     canvas.id = 'bg-effect';
@@ -31,7 +31,6 @@
     initStars();
 
     // --- Multilingual rain characters ---
-    // Latin, Arabic, Hindi/Devanagari, Chinese, Japanese (hiragana/katakana), Korean, Greek, Cyrillic, Thai
     var charSets = [
         '01<>{}[]()/$#@%&*+=',
         'ابتثجحخدذرزسشصضطظعغفقكلمنهوي',
@@ -48,8 +47,10 @@
     var allChars = '';
     charSets.forEach(function(s) { allChars += s; });
 
-    var fontSize = 14;
+    var fontSize = 16;
     var columns, drops;
+
+    // Each drop column tracks the y-position of the current falling character head
     function initRain() {
         columns = Math.floor(canvas.width / fontSize);
         drops = [];
@@ -59,30 +60,14 @@
     }
     initRain();
 
-    // --- Cloud ---
-    var clouds = [];
-    function initClouds() {
-        clouds = [];
-        for (var i = 0; i < 5; i++) {
-            clouds.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height * 0.5,
-                r: 60 + Math.random() * 90,
-                speed: 0.1 + Math.random() * 0.3,
-                drift: Math.random() > 0.5 ? 1 : -1,
-                opacity: 0.04 + Math.random() * 0.06
-            });
-        }
-    }
-    initClouds();
+    window.addEventListener('resize', function() { resize(); initStars(); initRain(); });
 
-    window.addEventListener('resize', function() { resize(); initStars(); initRain(); initClouds(); });
-
-    function drawBackground() {
-        // Clear with transparent (page body is black)
+    // Trail effect: we keep a fading overlay. But instead of clearing to black each
+    // frame (which erases stars), we draw rain chars onto a semi-transparent black
+    // rect ONLY on the side columns to create the fade trail.
+    function draw() {
+        // 1. Stars - draw full screen each frame (persistent, no trail)
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // 1. Stars (full screen, subtle)
         for (var i = 0; i < stars.length; i++) {
             var s = stars[i];
             s.o += s.sp * s.dir;
@@ -93,51 +78,39 @@
             ctx.fill();
         }
 
-        // 2. Cloud (center, behind cards)
-        for (var c = 0; c < clouds.length; c++) {
-            var cl = clouds[c];
-            cl.x += cl.speed * cl.drift;
-            if (cl.x > canvas.width + cl.r) cl.x = -cl.r;
-            if (cl.x < -cl.r) cl.x = canvas.width + cl.r;
-            cl.y += Math.sin(cl.x * 0.01) * 0.1;
-
-            var grd = ctx.createRadialGradient(cl.x, cl.y, cl.r * 0.2, cl.x, cl.y, cl.r);
-            grd.addColorStop(0, 'rgba(140, 180, 255, ' + (cl.opacity + 0.04) + ')');
-            grd.addColorStop(0.6, 'rgba(120, 160, 240, ' + cl.opacity + ')');
-            grd.addColorStop(1, 'rgba(100, 140, 220, 0)');
-            ctx.fillStyle = grd;
-            ctx.beginPath();
-            ctx.arc(cl.x, cl.y, cl.r, 0, Math.PI * 2);
-            ctx.fill();
-        }
-
-        // 3. Multilingual rain (left + right sides only)
-        ctx.font = fontSize + 'px monospace';
+        // 2. Rain on side columns with a fade trail
         var sideRatio = 0.22;
         var leftB = Math.floor(columns * sideRatio);
         var rightB = Math.floor(columns * (1 - sideRatio));
 
-        // Fade trail for rain
+        ctx.font = fontSize + 'px monospace';
+
         for (var i = 0; i < columns; i++) {
             if (i > leftB && i < rightB) continue;
+
             var x = i * fontSize;
             var y = drops[i] * fontSize;
 
-            // Trail fade
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
-            ctx.fillRect(x, y - fontSize, fontSize, fontSize);
+            // Draw a fading green streak (the trail) behind the head
+            for (var t = 0; t < 12; t++) {
+                var ty = y - t * fontSize;
+                if (ty < 0) continue;
+                var alpha = 1 - (t / 12);
+                ctx.fillStyle = 'rgba(0, 255, 65, ' + (alpha * 0.7) + ')';
+                var trailChar = allChars[Math.floor(Math.random() * allChars.length)];
+                ctx.fillText(trailChar, x, ty);
+            }
 
-            // Character
-            var ch = allChars[Math.floor(Math.random() * allChars.length)];
-            ctx.fillStyle = '#00FF41';
-            ctx.fillText(ch, x, y);
+            // Bright head
+            ctx.fillStyle = '#c8ffd0';
+            ctx.fillText(allChars[Math.floor(Math.random() * allChars.length)], x, y);
 
             if (y > canvas.height && Math.random() > 0.975) {
-                drops[i] = 0;
+                drops[i] = Math.floor(Math.random() * -20);
             }
             drops[i]++;
         }
     }
 
-    setInterval(drawBackground, 40);
+    setInterval(draw, 50);
 })();
