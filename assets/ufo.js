@@ -166,46 +166,47 @@
             u.wobble += 0.04;
             u.beamPhase += 0.08;
 
-            // Gentle magnetic repulsion around the content zone (soft force field)
-            // Two nested zones: a stronger inner zone for the name/subtitle
-            var dx = u.x - zone.cx;
-            var dy = u.y - zone.cy;
-            var dist = Math.sqrt(dx * dx + dy * dy);
-            var influence = zone.rx * 1.1; // outer repulsion field
-
-            // Inner (stronger) zone centered on the name/subtitle (above center)
+            // Two nested zones:
+            //  - Inner: HARD barrier around name + subtitle (UFO never passes behind them)
+            //  - Outer: soft repulsion around the rest of the content
             var nameCx = zone.cx;
             var nameCy = zone.cy - zone.ry * 0.4;
-            var nameRx = zone.rx * 0.75;
-            var nameRy = zone.ry * 0.45;
+            var nameRx = zone.rx * 0.8;
+            var nameRy = zone.ry * 0.5;
 
-            var push = { x: 0, y: 0 };
-
-            if (dist < influence && dist > 0) {
-                var strength = (1 - dist / influence) * 0.9; // increased base strength
-                var nx = dx / dist;
-                var ny = dy / dist;
-                push.x += nx * strength;
-                push.y += ny * strength;
-            }
-
-            // Stronger repulsion (1.5x) for the name/subtitle zone
+            // Hard elliptical barrier: if inside the name/subtitle zone, push fully OUT
             var ndx = u.x - nameCx;
             var ndy = u.y - nameCy;
-            // elliptical distance for the inner zone
             var ex = ndx / nameRx;
             var ey = ndy / nameRy;
             var edist = Math.sqrt(ex * ex + ey * ey);
-            if (edist < 1 && edist > 0) {
-                var nstrength = (1 - edist) * 1.35; // 1.5x the base
+            if (edist < 1) {
+                if (edist < 0.001) { edist = 0.001; ex = (Math.random() > 0.5 ? 1 : -1); ey = 0; }
                 var enx = ex / edist;
                 var eny = ey / edist;
-                push.x += enx * nstrength;
-                push.y += eny * nstrength;
+                // Position it exactly on the ellipse boundary, just outside
+                u.x = nameCx + enx * nameRx;
+                u.y = nameCy + eny * nameRy;
+                // Reflect velocity so it naturally slides along the edge and away
+                var vdot = u.vx * enx + u.vy * eny;
+                if (vdot < 0) {
+                    u.vx -= enx * vdot;
+                    u.vy -= eny * vdot;
+                }
             }
 
-            u.x += push.x;
-            u.y += push.y;
+            // Soft repulsion around the general content zone
+            var dx = u.x - zone.cx;
+            var dy = u.y - zone.cy;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+            var influence = zone.rx * 1.1;
+            if (dist < influence && dist > 0) {
+                var strength = (1 - dist / influence) * 0.9;
+                var nx = dx / dist;
+                var ny = dy / dist;
+                u.x += nx * strength;
+                u.y += ny * strength;
+            }
 
             drawUfo(u);
             var margin = 130;
