@@ -86,7 +86,8 @@ class ExplosionParticle {
 }
 
 // Button click handler
-button.addEventListener('click', () => {
+button.addEventListener('click', (e) => {
+    e.preventDefault();
     if (isTransitioning) return;
     isTransitioning = true;
 
@@ -105,6 +106,7 @@ button.addEventListener('click', () => {
     // Hide button
     button.style.opacity = '0';
     button.style.pointerEvents = 'none';
+    button.disabled = true;
 
     // Fade to black and transition after 1.5 seconds
     setTimeout(() => {

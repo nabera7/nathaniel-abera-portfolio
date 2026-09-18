@@ -4,13 +4,21 @@
     box-sizing: border-box;
 }
 
+:root {
+    --cursor-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 3l18 9-18 9V13H1V9h2V3z" fill="%23000000"/></svg>');
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Lato', sans-serif;
     background: #000;
     color: #fff;
     overflow: hidden;
     height: 100vh;
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="8" fill="none" stroke="%23FF00FF" stroke-width="2"/><circle cx="16" cy="16" r="4" fill="%23FF00FF"/><line x1="16" y1="4" x2="16" y2="10" stroke="%2300FFFF" stroke-width="1"/><line x1="16" y1="22" x2="16" y2="28" stroke="%2300FFFF" stroke-width="1"/><line x1="4" y1="16" x2="10" y2="16" stroke="%2300FFFF" stroke-width="1"/><line x1="22" y1="16" x2="28" y2="16" stroke="%2300FFFF" stroke-width="1"/></svg>') 16 16, auto;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M2 2l20 12-20 10V16H0V8h2V2z" fill="%23ffffff" stroke="%23000000" stroke-width="1"/></svg>') 2 2, auto;
 }
 
 canvas {
@@ -19,10 +27,15 @@ canvas {
     left: 0;
     width: 100%;
     height: 100%;
+    z-index: 1;
 }
 
 #starfield {
     z-index: 1;
+}
+
+#arrow-canvas {
+    z-index: 2;
 }
 
 #effects {
@@ -36,32 +49,41 @@ canvas {
     transform: translate(-50%, -50%);
     text-align: center;
     z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #0ea5e9;
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
+    object-fit: cover;
 }
 
 h1 {
     font-size: 4rem;
     font-weight: 700;
-    margin-bottom: 0.5rem;
+    margin: 0;
+    text-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
     letter-spacing: 2px;
-    background: linear-gradient(90deg, #FF0000, #FF7F00, #FFFF00, #00FF00, #0000FF, #4B0082, #9400D3);
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: rgbWave 3s linear infinite;
-    text-shadow: none;
+    color: #fff;
 }
 
-p {
+.subtitle {
     font-size: 1.5rem;
-    font-weight: 300;
-    margin-bottom: 3rem;
-    color: #a0a0a0;
+    font-weight: 700;
+    margin: 0;
+    color: #ffffff;
     letter-spacing: 3px;
+    text-transform: uppercase;
 }
 
 .cta-button {
-    padding: 15px 40px;
+    padding: 15px 50px;
     font-size: 1rem;
     font-family: 'Lato', sans-serif;
     font-weight: 700;
@@ -69,12 +91,13 @@ p {
     background: transparent;
     border: 2px solid #0ea5e9;
     color: #0ea5e9;
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><circle cx="16" cy="16" r="8" fill="none" stroke="%23FF00FF" stroke-width="2"/><circle cx="16" cy="16" r="4" fill="%23FF00FF"/><line x1="16" y1="4" x2="16" y2="10" stroke="%2300FFFF" stroke-width="1"/><line x1="16" y1="22" x2="16" y2="28" stroke="%2300FFFF" stroke-width="1"/><line x1="4" y1="16" x2="10" y2="16" stroke="%2300FFFF" stroke-width="1"/><line x1="22" y1="16" x2="28" y2="16" stroke="%2300FFFF" stroke-width="1"/></svg>') 16 16, pointer;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M2 2l20 12-20 10V16H0V8h2V2z" fill="%23ffffff" stroke="%23000000" stroke-width="1"/></svg>') 2 2, pointer;
     transition: all 0.2s ease;
     position: relative;
     overflow: hidden;
     text-transform: uppercase;
     box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
+    border-radius: 50px;
 }
 
 .cta-button:hover {
@@ -89,13 +112,9 @@ p {
     transform: scale(0.98);
 }
 
-@keyframes rgbWave {
-    0% {
-        background-position: 0% center;
-    }
-    100% {
-        background-position: 200% center;
-    }
+.cta-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 @keyframes buttonRgb {
@@ -126,12 +145,17 @@ p {
         font-size: 2.5rem;
     }
 
-    p {
+    .subtitle {
         font-size: 1rem;
     }
 
     .cta-button {
         padding: 12px 30px;
         font-size: 0.9rem;
+    }
+
+    .profile-pic {
+        width: 80px;
+        height: 80px;
     }
 }
