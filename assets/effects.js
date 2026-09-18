@@ -162,6 +162,7 @@ function startSwirl() {
         opacity: 0;
         z-index: 4;
         transition: opacity 2s ease;
+        pointer-events: none;
     `;
     document.body.appendChild(fadeOverlay);
 
@@ -172,7 +173,7 @@ function startSwirl() {
     // Redirect after transition
     setTimeout(() => {
         window.location.href = 'catalog.html';
-    }, 2500);
+    }, 3000);
 }
 
 // Animation loop
