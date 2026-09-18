@@ -99,7 +99,7 @@ body {
 }
 
 .doc-toggle .doc-label {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: #ffffff;
     letter-spacing: 0.5px;
@@ -107,11 +107,17 @@ body {
 }
 
 .doc-toggle .doc-hint {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: #ffffff;
-    margin-top: 8px;
+    margin-top: 10px;
     font-weight: 300;
     line-height: 1.5;
+}
+
+.doc-toggle .doc-hint::before {
+    content: '— ';
+    color: #38bdf8;
+    font-weight: 700;
 }
 
 .doc-toggle .view-prompt {
