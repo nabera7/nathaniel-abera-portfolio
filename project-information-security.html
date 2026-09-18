@@ -10,23 +10,46 @@
 </head>
 <body>
     <div class="project-container">
-        <a href="catalog.html" class="back-link">← Back to Projects</a>
+        <a href="catalog.html" class="back-link">&larr; Back to Projects</a>
         <header class="project-header">
             <h1>Information Systems Security</h1>
-            <p class="description">A layered approach to securing an organization's applications, systems, and networks. This project applies access control principles, security architecture, and defense-in-depth strategies, delivering security controls and operational artifacts that demonstrate how to protect enterprise environments against a range of threats.</p>
+            <p class="description">A layered approach to securing an organization's applications, systems, and networks through access control, security architecture, and defense-in-depth.</p>
         </header>
 
-        <div class="pdf-viewer">
-            <iframe src="assets/pdfs/information-systems-security.pdf#toolbar=0&navpanes=0" title="Information Systems Security"></iframe>
+        <div class="doc-sections">
+            <button class="doc-toggle" type="button">
+                <span class="doc-label">Access Control Design</span>
+                <span class="doc-hint">Role-based access control model and implementation</span>
+            </button>
+            <div class="doc-panel">
+                <div class="pdf-viewer">
+                    <iframe src="assets/pdfs/info-security-task1.pdf#toolbar=0&navpanes=0" title="Access Control Design"></iframe>
+                </div>
+            </div>
+
+            <button class="doc-toggle" type="button">
+                <span class="doc-label">Incident Response</span>
+                <span class="doc-hint">Containment and response to a security incident</span>
+            </button>
+            <div class="doc-panel">
+                <div class="pdf-viewer">
+                    <iframe src="assets/pdfs/info-security-task2.pdf#toolbar=0&navpanes=0" title="Incident Response"></iframe>
+                </div>
+            </div>
+
+            <button class="doc-toggle" type="button">
+                <span class="doc-label">Data Protection & Defense</span>
+                <span class="doc-hint">Vulnerability analysis and defense strategies</span>
+            </button>
+            <div class="doc-panel">
+                <div class="pdf-viewer">
+                    <iframe src="assets/pdfs/info-security-task3.pdf#toolbar=0&navpanes=0" title="Data Protection & Defense"></iframe>
+                </div>
+            </div>
+
         </div>
     </div>
-    <script>
-        // Prevent right-click download on the PDF viewer
-        document.addEventListener('contextmenu', function(e) {
-            if (e.target.closest('.pdf-viewer') || e.target.tagName === 'IFRAME') {
-                e.preventDefault();
-            }
-        });
-    </script>
+    <script src="assets/matrix-rain.js"></script>
+    <script src="assets/doc-viewer.js"></script>
 </body>
 </html>

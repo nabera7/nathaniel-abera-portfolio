@@ -10,23 +10,36 @@
 </head>
 <body>
     <div class="project-container">
-        <a href="catalog.html" class="back-link">← Back to Projects</a>
+        <a href="catalog.html" class="back-link">&larr; Back to Projects</a>
         <header class="project-header">
             <h1>Cryptography</h1>
-            <p class="description">Hands-on work with the cryptographic primitives that secure modern systems: symmetric and asymmetric encryption, hashing, and public key infrastructure. This project demonstrates how these mechanisms protect data at rest and in transit and how to apply them correctly in real scenarios.</p>
+            <p class="description">Hands-on work with encryption, hashing, and public key infrastructure to protect data at rest and in transit.</p>
         </header>
 
-        <div class="pdf-viewer">
-            <iframe src="assets/pdfs/cryptography.pdf#toolbar=0&navpanes=0" title="Cryptography"></iframe>
+        <div class="doc-sections">
+            <button class="doc-toggle" type="button">
+                <span class="doc-label">Symmetric & Asymmetric Encryption</span>
+                <span class="doc-hint">RSA key pairs and AES-256 encryption labs</span>
+            </button>
+            <div class="doc-panel">
+                <div class="pdf-viewer">
+                    <iframe src="assets/pdfs/crypto-task1.pdf#toolbar=0&navpanes=0" title="Symmetric & Asymmetric Encryption"></iframe>
+                </div>
+            </div>
+
+            <button class="doc-toggle" type="button">
+                <span class="doc-label">Cryptographic Analysis</span>
+                <span class="doc-hint">Applying cryptography to a real scenario</span>
+            </button>
+            <div class="doc-panel">
+                <div class="pdf-viewer">
+                    <iframe src="assets/pdfs/crypto-task2.pdf#toolbar=0&navpanes=0" title="Cryptographic Analysis"></iframe>
+                </div>
+            </div>
+
         </div>
     </div>
-    <script>
-        // Prevent right-click download on the PDF viewer
-        document.addEventListener('contextmenu', function(e) {
-            if (e.target.closest('.pdf-viewer') || e.target.tagName === 'IFRAME') {
-                e.preventDefault();
-            }
-        });
-    </script>
+    <script src="assets/matrix-rain.js"></script>
+    <script src="assets/doc-viewer.js"></script>
 </body>
 </html>

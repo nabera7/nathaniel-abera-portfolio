@@ -10,23 +10,46 @@
 </head>
 <body>
     <div class="project-container">
-        <a href="catalog.html" class="back-link">← Back to Projects</a>
+        <a href="catalog.html" class="back-link">&larr; Back to Projects</a>
         <header class="project-header">
             <h1>Security Program Management</h1>
-            <p class="description">Managing information security strategically rather than reactively. This project covers risk assessment, security program design, and aligning technical controls with business goals, producing a management-level view of how security should operate across an organization.</p>
+            <p class="description">Managing information security strategically with risk assessment and security program design.</p>
         </header>
 
-        <div class="pdf-viewer">
-            <iframe src="assets/pdfs/security-program-management.pdf#toolbar=0&navpanes=0" title="Security Program Management"></iframe>
+        <div class="doc-sections">
+            <button class="doc-toggle" type="button">
+                <span class="doc-label">Security Program Assessment</span>
+                <span class="doc-hint">Evaluating an organization's security posture</span>
+            </button>
+            <div class="doc-panel">
+                <div class="pdf-viewer">
+                    <iframe src="assets/pdfs/program-task1.pdf#toolbar=0&navpanes=0" title="Security Program Assessment"></iframe>
+                </div>
+            </div>
+
+            <button class="doc-toggle" type="button">
+                <span class="doc-label">Risk Management</span>
+                <span class="doc-hint">Risk assessment and mitigation planning</span>
+            </button>
+            <div class="doc-panel">
+                <div class="pdf-viewer">
+                    <iframe src="assets/pdfs/program-task2.pdf#toolbar=0&navpanes=0" title="Risk Management"></iframe>
+                </div>
+            </div>
+
+            <button class="doc-toggle" type="button">
+                <span class="doc-label">Program Improvement</span>
+                <span class="doc-hint">Security awareness and patch management recommendations</span>
+            </button>
+            <div class="doc-panel">
+                <div class="pdf-viewer">
+                    <iframe src="assets/pdfs/program-task3.pdf#toolbar=0&navpanes=0" title="Program Improvement"></iframe>
+                </div>
+            </div>
+
         </div>
     </div>
-    <script>
-        // Prevent right-click download on the PDF viewer
-        document.addEventListener('contextmenu', function(e) {
-            if (e.target.closest('.pdf-viewer') || e.target.tagName === 'IFRAME') {
-                e.preventDefault();
-            }
-        });
-    </script>
+    <script src="assets/matrix-rain.js"></script>
+    <script src="assets/doc-viewer.js"></script>
 </body>
 </html>

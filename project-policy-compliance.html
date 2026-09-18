@@ -3,30 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Information Security Policy &amp; Compliance — Cybersecurity Portfolio</title>
+    <title>Information Security Policy & Compliance — Cybersecurity Portfolio</title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/project.css">
 </head>
 <body>
     <div class="project-container">
-        <a href="catalog.html" class="back-link">← Back to Projects</a>
+        <a href="catalog.html" class="back-link">&larr; Back to Projects</a>
         <header class="project-header">
-            <h1>Information Security Policy &amp; Compliance</h1>
-            <p class="description">Building actionable information security policies from the ground up. This project translates legal and regulatory obligations into governance documents that a real organization could adopt, addressing privacy, acceptable use, incident response, and compliance requirements.</p>
+            <h1>Information Security Policy & Compliance</h1>
+            <p class="description">Building actionable security policies and translating legal and regulatory obligations into governance documents.</p>
         </header>
 
-        <div class="pdf-viewer">
-            <iframe src="assets/pdfs/security-policy-compliance.pdf#toolbar=0&navpanes=0" title="Information Security Policy &amp; Compliance"></iframe>
+        <div class="doc-sections">
+            <button class="doc-toggle" type="button">
+                <span class="doc-label">Security Policy Analysis</span>
+                <span class="doc-hint">Analysis of an organization's security policy needs</span>
+            </button>
+            <div class="doc-panel">
+                <div class="pdf-viewer">
+                    <iframe src="assets/pdfs/policy-task1.pdf#toolbar=0&navpanes=0" title="Security Policy Analysis"></iframe>
+                </div>
+            </div>
+
+            <button class="doc-toggle" type="button">
+                <span class="doc-label">Policy Development</span>
+                <span class="doc-hint">Developing information security policy</span>
+            </button>
+            <div class="doc-panel">
+                <div class="pdf-viewer">
+                    <iframe src="assets/pdfs/policy-task2.pdf#toolbar=0&navpanes=0" title="Policy Development"></iframe>
+                </div>
+            </div>
+
         </div>
     </div>
-    <script>
-        // Prevent right-click download on the PDF viewer
-        document.addEventListener('contextmenu', function(e) {
-            if (e.target.closest('.pdf-viewer') || e.target.tagName === 'IFRAME') {
-                e.preventDefault();
-            }
-        });
-    </script>
+    <script src="assets/matrix-rain.js"></script>
+    <script src="assets/doc-viewer.js"></script>
 </body>
 </html>

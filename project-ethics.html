@@ -10,23 +10,36 @@
 </head>
 <body>
     <div class="project-container">
-        <a href="catalog.html" class="back-link">← Back to Projects</a>
+        <a href="catalog.html" class="back-link">&larr; Back to Projects</a>
         <header class="project-header">
             <h1>Ethics in Technology</h1>
-            <p class="description">An examination of the ethical responsibilities that come with security work. This project works through realistic scenarios involving privacy, responsible disclosure, and the tension between security objectives and individual rights, arriving at defensible, professionally grounded decisions.</p>
+            <p class="description">Applying ethical frameworks to real security dilemmas involving privacy, responsible disclosure, and professional obligations.</p>
         </header>
 
-        <div class="pdf-viewer">
-            <iframe src="assets/pdfs/ethics-in-technology.pdf#toolbar=0&navpanes=0" title="Ethics in Technology"></iframe>
+        <div class="doc-sections">
+            <button class="doc-toggle" type="button">
+                <span class="doc-label">Ethical Issues Analysis</span>
+                <span class="doc-hint">Analyzing ethical issues in a healthcare data scenario</span>
+            </button>
+            <div class="doc-panel">
+                <div class="pdf-viewer">
+                    <iframe src="assets/pdfs/ethics-task1.pdf#toolbar=0&navpanes=0" title="Ethical Issues Analysis"></iframe>
+                </div>
+            </div>
+
+            <button class="doc-toggle" type="button">
+                <span class="doc-label">Ethical Guidance & Behaviors</span>
+                <span class="doc-hint">Codes of ethics and AI bias in practice</span>
+            </button>
+            <div class="doc-panel">
+                <div class="pdf-viewer">
+                    <iframe src="assets/pdfs/ethics-task2.pdf#toolbar=0&navpanes=0" title="Ethical Guidance & Behaviors"></iframe>
+                </div>
+            </div>
+
         </div>
     </div>
-    <script>
-        // Prevent right-click download on the PDF viewer
-        document.addEventListener('contextmenu', function(e) {
-            if (e.target.closest('.pdf-viewer') || e.target.tagName === 'IFRAME') {
-                e.preventDefault();
-            }
-        });
-    </script>
+    <script src="assets/matrix-rain.js"></script>
+    <script src="assets/doc-viewer.js"></script>
 </body>
 </html>

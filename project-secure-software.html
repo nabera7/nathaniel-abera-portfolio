@@ -10,23 +10,36 @@
 </head>
 <body>
     <div class="project-container">
-        <a href="catalog.html" class="back-link">← Back to Projects</a>
+        <a href="catalog.html" class="back-link">&larr; Back to Projects</a>
         <header class="project-header">
             <h1>Secure Software Development</h1>
-            <p class="description">A security audit of a web application followed by remediation. This project identifies vulnerabilities such as hardcoded secrets, plaintext passwords, and broken authentication, then fixes them using secure coding practices and validates the fixes through automated security testing and static analysis tools.</p>
+            <p class="description">Auditing a web application for vulnerabilities, remediating issues, and validating fixes through security testing.</p>
         </header>
 
-        <div class="pdf-viewer">
-            <iframe src="assets/pdfs/secure-software-development.pdf#toolbar=0&navpanes=0" title="Secure Software Development"></iframe>
+        <div class="doc-sections">
+            <button class="doc-toggle" type="button">
+                <span class="doc-label">Static Code Analysis</span>
+                <span class="doc-hint">Identifying vulnerabilities via static analysis</span>
+            </button>
+            <div class="doc-panel">
+                <div class="pdf-viewer">
+                    <iframe src="assets/pdfs/software-task1.pdf#toolbar=0&navpanes=0" title="Static Code Analysis"></iframe>
+                </div>
+            </div>
+
+            <button class="doc-toggle" type="button">
+                <span class="doc-label">Security Testing & Remediation</span>
+                <span class="doc-hint">Fixing vulnerabilities and validating with tests</span>
+            </button>
+            <div class="doc-panel">
+                <div class="pdf-viewer">
+                    <iframe src="assets/pdfs/software-task2.pdf#toolbar=0&navpanes=0" title="Security Testing & Remediation"></iframe>
+                </div>
+            </div>
+
         </div>
     </div>
-    <script>
-        // Prevent right-click download on the PDF viewer
-        document.addEventListener('contextmenu', function(e) {
-            if (e.target.closest('.pdf-viewer') || e.target.tagName === 'IFRAME') {
-                e.preventDefault();
-            }
-        });
-    </script>
+    <script src="assets/matrix-rain.js"></script>
+    <script src="assets/doc-viewer.js"></script>
 </body>
 </html>
