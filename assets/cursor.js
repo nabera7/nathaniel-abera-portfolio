@@ -60,7 +60,7 @@
     document.addEventListener('mouseleave', function() { mx = -100; my = -100; });
 
     // Hotspot: (22, 0) from the .cur files
-    var hotX = 22, hotY = 0;
+    var hotX = 0, hotY = 0;
 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
