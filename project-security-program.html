@@ -7,6 +7,7 @@
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/project.css">
+    <link rel="stylesheet" href="assets/pdf-viewer.css">
 </head>
 <body>
     <div class="project-container">
@@ -23,9 +24,7 @@
                 <span class="view-prompt">Click to View</span>
             </button>
             <div class="doc-panel">
-                <div class="pdf-viewer">
-                    <iframe src="assets/pdfs/program-task1.pdf#toolbar=1&navpanes=0" title="Security Program Assessment"></iframe>
-                </div>
+                <div class="pdf-viewer" data-src="assets/pdfs/program-task1.pdf"></div>
             </div>
 
             <button class="doc-toggle" type="button">
@@ -34,9 +33,7 @@
                 <span class="view-prompt">Click to View</span>
             </button>
             <div class="doc-panel">
-                <div class="pdf-viewer">
-                    <iframe src="assets/pdfs/program-task2.pdf#toolbar=1&navpanes=0" title="Risk Management"></iframe>
-                </div>
+                <div class="pdf-viewer" data-src="assets/pdfs/program-task2.pdf"></div>
             </div>
 
             <button class="doc-toggle" type="button">
@@ -45,15 +42,14 @@
                 <span class="view-prompt">Click to View</span>
             </button>
             <div class="doc-panel">
-                <div class="pdf-viewer">
-                    <iframe src="assets/pdfs/program-task3.pdf#toolbar=1&navpanes=0" title="Program Improvement"></iframe>
-                </div>
+                <div class="pdf-viewer" data-src="assets/pdfs/program-task3.pdf"></div>
             </div>
 
         </div>
     </div>
     <script src="assets/matrix-rain.js"></script>
     <script src="assets/doc-viewer.js"></script>
+    <script src="assets/pdf-viewer.js"></script>
     <script src="assets/cursor-page.js"></script>
 </body>
 </html>
