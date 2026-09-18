@@ -59,10 +59,11 @@ body {
     align-items: center;
     font-size: 1.8rem;
     font-weight: 700;
-    color: #000000;
+    color: #ffffff;
     margin-bottom: 1.2rem;
     line-height: 1.2;
-    background: #ffffff;
+    text-shadow: 0 0 14px rgba(56, 189, 248, 0.6);
+    background: rgba(56, 189, 248, 0.12);
     padding: 0.5em 1.2em;
     border-radius: 50px;
 }
