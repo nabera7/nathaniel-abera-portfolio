@@ -64,7 +64,7 @@ h1 {
     font-size: 4rem;
     font-weight: 700;
     margin: 0;
-    text-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
+    text-shadow: 0 0 16px rgba(14, 165, 233, 0.5);
     color: #fff;
     animation: breathe 4s ease-in-out infinite;
 }
@@ -74,8 +74,8 @@ h1 {
     font-weight: 700;
     margin: 0;
     color: #ffffff;
-    text-transform: uppercase;
-    text-shadow: 0 0 20px rgba(14, 165, 233, 0.7), 0 0 10px rgba(14, 165, 233, 0.5);
+    text-transform: capitalize;
+    text-shadow: 0 0 16px rgba(14, 165, 233, 0.7), 0 0 8px rgba(14, 165, 233, 0.5);
     animation: breathe 4s ease-in-out infinite;
     margin-bottom: 2rem;
 }
