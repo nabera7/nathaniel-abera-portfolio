@@ -4,10 +4,6 @@
     box-sizing: border-box;
 }
 
-:root {
-    --cursor-url: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 3l18 9-18 9V13H1V9h2V3z" fill="%23000000"/></svg>');
-}
-
 html {
     scroll-behavior: smooth;
 }
@@ -18,7 +14,7 @@ body {
     color: #fff;
     overflow: hidden;
     height: 100vh;
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M2 2l20 12-20 10V16H0V8h2V2z" fill="%23ffffff" stroke="%23000000" stroke-width="1"/></svg>') 2 2, auto;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 3l18 9-18 10V12H1V7h2V3z" fill="%2300FF44" stroke="%2300CC33" stroke-width="1"/></svg>') 2 2, auto;
 }
 
 canvas {
@@ -44,7 +40,7 @@ canvas {
 
 .hero-container {
     position: fixed;
-    top: 50%;
+    top: 42%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -60,8 +56,9 @@ canvas {
     height: 120px;
     border-radius: 50%;
     border: 3px solid #0ea5e9;
-    box-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
+    box-shadow: 0 0 30px rgba(14, 165, 233, 0.6);
     object-fit: cover;
+    animation: breathe 4s ease-in-out infinite;
 }
 
 h1 {
@@ -71,6 +68,7 @@ h1 {
     text-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
     letter-spacing: 2px;
     color: #fff;
+    animation: breathe 4s ease-in-out infinite;
 }
 
 .subtitle {
@@ -81,6 +79,7 @@ h1 {
     letter-spacing: 3px;
     text-transform: uppercase;
     text-shadow: 0 0 20px rgba(14, 165, 233, 0.7), 0 0 10px rgba(14, 165, 233, 0.5);
+    animation: breathe 4s ease-in-out infinite;
 }
 
 .cta-button {
@@ -90,23 +89,22 @@ h1 {
     font-weight: 700;
     letter-spacing: 1px;
     background: transparent;
-    border: 2px solid #0ea5e9;
     color: #0ea5e9;
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><path d="M2 2l20 12-20 10V16H0V8h2V2z" fill="%23ffffff" stroke="%23000000" stroke-width="1"/></svg>') 2 2, pointer;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M3 3l18 9-18 10V12H1V7h2V3z" fill="%2300FF44" stroke="%2300CC33" stroke-width="1"/></svg>') 2 2, pointer;
     transition: all 0.2s ease;
     position: relative;
     overflow: hidden;
     text-transform: uppercase;
-    box-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
     border-radius: 50px;
+    border: 3px solid #0ea5e9;
+    animation: buttonShake 3s ease-in-out infinite, borderRgbWave 4s linear infinite;
+    box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
 }
 
 .cta-button:hover {
-    border-color: #FF00FF;
-    color: #FF00FF;
-    box-shadow: 0 0 30px rgba(255, 0, 255, 0.8), 0 0 15px rgba(0, 255, 255, 0.5);
-    transform: scale(1.08);
-    animation: buttonRgb 0.6s ease-in-out infinite;
+    color: #ffffff;
+    animation: buttonShake 0.5s ease-in-out infinite, borderRgbWave 0.4s linear infinite;
+    box-shadow: 0 0 40px rgba(255, 0, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.5);
 }
 
 .cta-button:active {
@@ -118,26 +116,81 @@ h1 {
     cursor: not-allowed;
 }
 
-@keyframes buttonRgb {
-    0% {
-        border-color: #FF0000;
-        box-shadow: 0 0 30px rgba(255, 0, 0, 0.8), 0 0 15px rgba(255, 127, 0, 0.5);
-    }
-    25% {
-        border-color: #00FF00;
-        box-shadow: 0 0 30px rgba(0, 255, 0, 0.8), 0 0 15px rgba(0, 255, 255, 0.5);
+/* Breathing/pulsing animation for everything */
+@keyframes breathe {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
     }
     50% {
-        border-color: #0000FF;
-        box-shadow: 0 0 30px rgba(0, 0, 255, 0.8), 0 0 15px rgba(75, 0, 130, 0.5);
+        transform: scale(1.03);
+        opacity: 0.92;
     }
-    75% {
-        border-color: #FF00FF;
-        box-shadow: 0 0 30px rgba(255, 0, 255, 0.8), 0 0 15px rgba(148, 0, 211, 0.5);
+}
+
+/* Button shake animation */
+@keyframes buttonShake {
+    0%, 100% {
+        transform: rotate(0deg) translateX(0);
+    }
+    10% {
+        transform: rotate(-1deg) translateX(-2px);
+    }
+    20% {
+        transform: rotate(1deg) translateX(2px);
+    }
+    30% {
+        transform: rotate(-1deg) translateX(-2px);
+    }
+    40% {
+        transform: rotate(1deg) translateX(2px);
+    }
+    50% {
+        transform: rotate(0deg) translateX(0);
+    }
+    60% {
+        transform: rotate(1deg) translateX(2px);
+    }
+    70% {
+        transform: rotate(-1deg) translateX(-2px);
+    }
+    80% {
+        transform: rotate(1deg) translateX(2px);
+    }
+    90% {
+        transform: rotate(-1deg) translateX(-2px);
+    }
+}
+
+/* RGB wave border animation */
+@keyframes borderRgbWave {
+    0% {
+        border-color: #FF0000;
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+    }
+    16% {
+        border-color: #FF7F00;
+        box-shadow: 0 0 20px rgba(255, 127, 0, 0.6);
+    }
+    33% {
+        border-color: #FFFF00;
+        box-shadow: 0 0 20px rgba(255, 255, 0, 0.6);
+    }
+    50% {
+        border-color: #00FF00;
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+    }
+    66% {
+        border-color: #0000FF;
+        box-shadow: 0 0 20px rgba(0, 0, 255, 0.6);
+    }
+    83% {
+        border-color: #9400D3;
+        box-shadow: 0 0 20px rgba(148, 0, 211, 0.6);
     }
     100% {
         border-color: #FF0000;
-        box-shadow: 0 0 30px rgba(255, 0, 0, 0.8), 0 0 15px rgba(255, 127, 0, 0.5);
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
     }
 }
 
