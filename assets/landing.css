@@ -14,7 +14,7 @@ body {
     color: #fff;
     overflow: hidden;
     height: 100vh;
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2l5 12-4-1-2 7-2-7-4 1z" fill="%2300FF44" stroke="%2300CC33" stroke-width="1"/></svg>') 12 4, auto;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><path d="M4 1L1 9l3.5-1 2.5 6 2.5-6L13 9 4 1z" fill="%2300FF44" stroke="%2300CC33" stroke-width="0.5"/></svg>') 4 1, auto;
 }
 
 canvas {
@@ -80,6 +80,7 @@ h1 {
     text-transform: uppercase;
     text-shadow: 0 0 20px rgba(14, 165, 233, 0.7), 0 0 10px rgba(14, 165, 233, 0.5);
     animation: breathe 4s ease-in-out infinite;
+    margin-bottom: 2rem;
 }
 
 .cta-button {
@@ -90,7 +91,7 @@ h1 {
     letter-spacing: 1px;
     background: #ffffff;
     color: #000000;
-    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2l5 12-4-1-2 7-2-7-4 1z" fill="%2300FF44" stroke="%2300CC33" stroke-width="1"/></svg>') 12 4, pointer;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28"><path d="M4 1L1 9l3.5-1 2.5 6 2.5-6L13 9 4 1z" fill="%2300FF44" stroke="%2300CC33" stroke-width="0.5"/></svg>') 4 1, pointer;
     transition: all 0.2s ease;
     position: relative;
     overflow: hidden;
@@ -98,13 +99,13 @@ h1 {
     border-radius: 50px;
     border: 3px solid #0ea5e9;
     animation: buttonShake 3s ease-in-out infinite, borderRgbWave 4s linear infinite;
-    box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
+    box-shadow: 0 0 8px rgba(14, 165, 233, 0.2);
 }
 
 .cta-button:hover {
     color: #000000;
     animation: buttonShake 0.5s ease-in-out infinite, borderRgbWave 0.4s linear infinite;
-    box-shadow: 0 0 40px rgba(255, 0, 255, 0.8), 0 0 20px rgba(0, 255, 255, 0.5);
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.5), 0 0 10px rgba(0, 255, 255, 0.3);
 }
 
 .cta-button:active {
