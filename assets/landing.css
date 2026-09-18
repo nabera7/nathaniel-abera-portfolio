@@ -64,9 +64,7 @@ h1 {
     font-size: 4rem;
     font-weight: 700;
     margin: 0;
-    text-shadow: 0 0 16px rgba(56, 189, 248, 0.5);
     color: #fff;
-    animation: breathe 4s ease-in-out infinite;
 }
 
 .subtitle {
@@ -75,8 +73,6 @@ h1 {
     margin: 0;
     color: #ffffff;
     text-transform: capitalize;
-    text-shadow: 0 0 16px rgba(56, 189, 248, 0.7), 0 0 8px rgba(56, 189, 248, 0.5);
-    animation: breathe 4s ease-in-out infinite;
     margin-bottom: 2rem;
 }
 
@@ -94,13 +90,13 @@ h1 {
     text-transform: uppercase;
     border-radius: 50px;
     border: 3px solid #38bdf8;
-    animation: buttonShake 3s ease-in-out infinite, borderRgbWave 4s linear infinite;
+    animation: buttonShake 3s ease-in-out infinite;
     box-shadow: 0 0 8px rgba(56, 189, 248, 0.2);
 }
 
 .cta-button:hover {
     color: #000000;
-    animation: borderRgbWave 0.25s linear infinite;
+    animation: buttonShake 3s ease-in-out infinite, borderRgbWave 4s linear infinite;
     box-shadow: 0 0 20px rgba(255, 0, 255, 0.5), 0 0 10px rgba(0, 255, 255, 0.3);
 }
 
