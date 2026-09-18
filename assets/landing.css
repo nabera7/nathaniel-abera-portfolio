@@ -2,7 +2,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: url('assets/kali_cursor_anim.gif') 4 4, auto !important;
+    cursor: url('assets/cursor_normal2.png') 22 0, auto !important;
+}
+
+*:active {
+    cursor: url('assets/cursor_effect_no.png') 22 0, auto !important;
 }
 
 html {
