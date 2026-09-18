@@ -7,67 +7,37 @@ effectsCanvas.width = window.innerWidth;
 effectsCanvas.height = window.innerHeight;
 
 let isTransitioning = false;
-let warpProgress = 0; // 0 -> 1
-let warpRunning = false;
+let warpActive = false;
+let warpT = 0; // 0 → 1
 
-// Star-shaped streak lines radiating from center (hyperspace/warp)
-const warpStars = [];
-const WARP_COUNT = 300;
-for (let i = 0; i < WARP_COUNT; i++) {
-    warpStars.push({
+// Warp streaks (each has an angle + a distance that continuously grows)
+const streaks = [];
+const STREAK_COUNT = 350;
+for (let i = 0; i < STREAK_COUNT; i++) {
+    streaks.push({
         angle: Math.random() * Math.PI * 2,
-        dist: Math.random(),          // starting radius fraction
-        speed: 0.015 + Math.random() * 0.035,
-        length: 0.1 + Math.random() * 0.25,
-        thickness: 1 + Math.random() * 2.5,
-        hueShift: Math.random()
+        dist: Math.random(),          // 0..1 radial fraction
+        speed: 0.02 + Math.random() * 0.05,
+        length: 0.12 + Math.random() * 0.3,
+        thickness: 1 + Math.random() * 2.5
     });
 }
 
-function drawWarp() {
-    const cx = effectsCanvas.width / 2;
-    const cy = effectsCanvas.height / 2;
-    const maxR = Math.max(effectsCanvas.width, effectsCanvas.height) * 0.75;
-
-    // Fading trail (stretch lines get longer as we accelerate)
-    effectsCtx.clearRect(0, 0, effectsCanvas.width, effectsCanvas.height);
-
-    for (const s of warpStars) {
-        // Each star moves outward; dist represents how far along it is
-        const r = s.dist * maxR;
-        const streakLen = s.length * maxR * (0.3 + warpProgress * 1.5);
-        const x1 = cx + Math.cos(s.angle) * r;
-        const y1 = cy + Math.sin(s.angle) * r;
-        const x2 = cx + Math.cos(s.angle) * (r - streakLen);
-        const y2 = cy + Math.sin(s.angle) * (r - streakLen);
-
-        // Color interpolates from white-center to blue-ish tail as we warp
-        const alpha = Math.min(1, 0.4 + warpProgress * 0.6);
-        const g = effectsCtx.createLinearGradient(x1, y1, x2, y2);
-        g.addColorStop(0, `rgba(255, 255, 255, ${alpha})`);
-        g.addColorStop(0.5, `rgba(120, 200, 255, ${alpha * 0.7})`);
-        g.addColorStop(1, `rgba(56, 189, 248, 0)`);
-
-        effectsCtx.strokeStyle = g;
-        effectsCtx.lineWidth = s.thickness * (0.7 + warpProgress * 0.8);
-        effectsCtx.lineCap = 'round';
-        effectsCtx.beginPath();
-        effectsCtx.moveTo(x1, y1);
-        effectsCtx.lineTo(x2, y2);
-        effectsCtx.stroke();
-    }
-}
-
 function startWarp() {
-    warpRunning = true;
-    warpProgress = 0;
+    warpActive = true;
+    warpT = 0;
 
-    // Hide the content (fade the hero out as warp begins)
+    // Hide the content (fade in place, no move)
     const hero = document.querySelector('.hero-container');
     if (hero) {
-        hero.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        hero.style.transition = 'opacity 0.4s ease';
         hero.style.opacity = '0';
-        hero.style.transform += ' scale(0.9)';
+    }
+    // Hide the arrow canvas
+    const arrow = document.getElementById('arrow-canvas');
+    if (arrow) {
+        arrow.style.transition = 'opacity 0.3s ease';
+        arrow.style.opacity = '0';
     }
     button.disabled = true;
     button.style.pointerEvents = 'none';
@@ -80,27 +50,73 @@ button.addEventListener('click', (e) => {
     startWarp();
 });
 
-// Animation loop
-function animateEffects() {
-    if (warpRunning) {
-        warpProgress += 0.018;
-        if (warpProgress >= 1) {
-            warpProgress = 1;
-            warpRunning = false;
-            // Warp complete — navigate
-            setTimeout(() => {
-                window.location.href = 'catalog.html';
-            }, 250);
-        }
-    }
+function drawWarp() {
+    const cx = effectsCanvas.width / 2;
+    const cy = effectsCanvas.height / 2;
+    const maxR = Math.max(effectsCanvas.width, effectsCanvas.height) * 0.8;
 
-    if (warpProgress > 0) {
+    // advance each streak outward
+    for (const s of streaks) {
+        s.dist += s.speed * (0.5 + warpT * 2);
+        if (s.dist > 1.15) s.dist = 0.1 + Math.random() * 0.1;
+
+        const r = s.dist * maxR;
+        const len = s.length * maxR * (0.3 + warpT * 2.2);
+        const x1 = cx + Math.cos(s.angle) * r;
+        const y1 = cy + Math.sin(s.angle) * r;
+        const x2 = cx + Math.cos(s.angle) * (r - len);
+        const y2 = cy + Math.sin(s.angle) * (r - len);
+
+        const alpha = Math.min(1, 0.5 + warpT * 0.5);
+        const g = effectsCtx.createLinearGradient(x1, y1, x2, y2);
+        g.addColorStop(0, `rgba(255, 255, 255, ${alpha})`);
+        g.addColorStop(0.5, `rgba(140, 210, 255, ${alpha * 0.7})`);
+        g.addColorStop(1, `rgba(56, 189, 248, 0)`);
+
+        effectsCtx.strokeStyle = g;
+        effectsCtx.lineWidth = s.thickness * (0.5 + warpT * 1.2);
+        effectsCtx.lineCap = 'round';
+        effectsCtx.beginPath();
+        effectsCtx.moveTo(x1, y1);
+        effectsCtx.lineTo(x2, y2);
+        effectsCtx.stroke();
+    }
+}
+
+// A fade overlay we create once, reuse
+let fadeOverlay = null;
+function beginFadeAndNavigate() {
+    if (!fadeOverlay) {
+        fadeOverlay = document.createElement('div');
+        fadeOverlay.style.cssText = 'position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; opacity: 0; z-index: 5; pointer-events: none; transition: opacity 0.6s ease;';
+        document.body.appendChild(fadeOverlay);
+    }
+    fadeOverlay.style.opacity = '1';
+    setTimeout(() => {
+        window.location.href = 'catalog.html';
+    }, 650);
+}
+
+function animate() {
+    if (warpActive) {
+        warpT += 0.02;
+        if (warpT >= 1) {
+            warpT = 1;
+            warpActive = false;
+            // warp reached peak — fade out and navigate
+            beginFadeAndNavigate();
+        }
+        effectsCtx.clearRect(0, 0, effectsCanvas.width, effectsCanvas.height);
+        drawWarp();
+    } else if (warpT > 0) {
+        // keep drawing the completed warp briefly until fade completes
+        effectsCtx.clearRect(0, 0, effectsCanvas.width, effectsCanvas.height);
         drawWarp();
     } else {
         effectsCtx.clearRect(0, 0, effectsCanvas.width, effectsCanvas.height);
     }
 
-    requestAnimationFrame(animateEffects);
+    requestAnimationFrame(animate);
 }
 
 window.addEventListener('resize', () => {
@@ -108,7 +124,4 @@ window.addEventListener('resize', () => {
     effectsCanvas.height = window.innerHeight;
 });
 
-animateEffects();
-
-// cache-bust v2
-
+animate();
