@@ -81,23 +81,24 @@ h1 {
     font-size: 1rem;
     font-family: 'Inter', sans-serif;
     font-weight: 700;
-    background: #ffffff;
     color: #000000;
     
-    transition: all 0.2s ease;
+    transition: box-shadow 0.2s ease;
     position: relative;
-    overflow: hidden;
     text-transform: uppercase;
     border-radius: 50px;
-    border: 3px solid #38bdf8;
-    animation: buttonShake 3s ease-in-out infinite;
+    border: 3px solid transparent;
+    background:
+        linear-gradient(#ffffff, #ffffff) padding-box,
+        conic-gradient(from var(--angle, 0deg),
+            #0ea5e9, #38bdf8, #60a5fa, #818cf8, #22d3ee, #0284c7, #0ea5e9) border-box;
+    animation: buttonShake 3s ease-in-out infinite, blueTrack 6s linear infinite;
     box-shadow: 0 0 8px rgba(56, 189, 248, 0.2);
 }
 
 .cta-button:hover {
     color: #000000;
-    animation: buttonShake 3s ease-in-out infinite, borderRgbWave 4s linear infinite;
-    box-shadow: 0 0 20px rgba(255, 0, 255, 0.5), 0 0 10px rgba(0, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.5), 0 0 10px rgba(34, 211, 238, 0.3);
 }
 
 .cta-button:active {
@@ -155,35 +156,20 @@ h1 {
     }
 }
 
-/* RGB wave border animation */
-@keyframes borderRgbWave {
-    0% {
-        border-color: #FF0000;
-        box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+/* Animated angle for smooth conic-gradient rotation (blue-hue track) */
+@property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+}
+
+/* Rotating blue-hue ring: cycles through shades of blue in a circular sweep */
+@keyframes blueTrack {
+    from {
+        --angle: 0deg;
     }
-    16% {
-        border-color: #FF7F00;
-        box-shadow: 0 0 20px rgba(255, 127, 0, 0.6);
-    }
-    33% {
-        border-color: #FFFF00;
-        box-shadow: 0 0 20px rgba(255, 255, 0, 0.6);
-    }
-    50% {
-        border-color: #00FF00;
-        box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
-    }
-    66% {
-        border-color: #0000FF;
-        box-shadow: 0 0 20px rgba(0, 0, 255, 0.6);
-    }
-    83% {
-        border-color: #9400D3;
-        box-shadow: 0 0 20px rgba(148, 0, 211, 0.6);
-    }
-    100% {
-        border-color: #FF0000;
-        box-shadow: 0 0 20px rgba(255, 0, 0, 0.6);
+    to {
+        --angle: 360deg;
     }
 }
 
