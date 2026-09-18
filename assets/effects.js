@@ -53,28 +53,31 @@ button.addEventListener('click', (e) => {
 function drawWarp() {
     const cx = effectsCanvas.width / 2;
     const cy = effectsCanvas.height / 2;
-    const maxR = Math.max(effectsCanvas.width, effectsCanvas.height) * 0.8;
+    const maxR = Math.max(effectsCanvas.width, effectsCanvas.height) * 0.9;
 
-    // advance each streak outward
+    // acceleration ramps up hard as warp progresses (catapult feel)
+    const accel = Math.pow(warpT, 1.6);
+
     for (const s of streaks) {
-        s.dist += s.speed * (0.5 + warpT * 2);
-        if (s.dist > 1.15) s.dist = 0.1 + Math.random() * 0.1;
+        // continuously accelerate outward from center
+        s.dist += (0.008 + accel * 0.35);
+        if (s.dist > 1.5) s.dist = 0.03; // recycle back to near-center (behind view)
 
         const r = s.dist * maxR;
-        const len = s.length * maxR * (0.3 + warpT * 2.2);
+        const len = s.length * maxR * (0.4 + accel * 3.5);
         const x1 = cx + Math.cos(s.angle) * r;
         const y1 = cy + Math.sin(s.angle) * r;
         const x2 = cx + Math.cos(s.angle) * (r - len);
         const y2 = cy + Math.sin(s.angle) * (r - len);
 
-        const alpha = Math.min(1, 0.5 + warpT * 0.5);
+        const alpha = Math.min(1, 0.55 + warpT * 0.45);
         const g = effectsCtx.createLinearGradient(x1, y1, x2, y2);
         g.addColorStop(0, `rgba(255, 255, 255, ${alpha})`);
-        g.addColorStop(0.5, `rgba(140, 210, 255, ${alpha * 0.7})`);
+        g.addColorStop(0.4, `rgba(140, 210, 255, ${alpha * 0.8})`);
         g.addColorStop(1, `rgba(56, 189, 248, 0)`);
 
         effectsCtx.strokeStyle = g;
-        effectsCtx.lineWidth = s.thickness * (0.5 + warpT * 1.2);
+        effectsCtx.lineWidth = s.thickness * (0.4 + accel * 1.6);
         effectsCtx.lineCap = 'round';
         effectsCtx.beginPath();
         effectsCtx.moveTo(x1, y1);
