@@ -3,7 +3,7 @@
     // Hide native cursor
     var style = document.createElement('style');
     style.id = 'hide-native-cursor';
-    style.textContent = 'html, body, canvas, div, button, img, a, p, h1, h2, * { cursor: none !important; } html:active, body:active, *:active { cursor: none !important; }';
+    style.textContent = 'html, body, canvas, div, button, img, a, p, h1, h2, * { cursor: none !important; } html:active, body:active, *:active { cursor: none !important; } .pdf-viewer, .pdf-viewer *, .pdf-toolbar, .pdf-toolbar button, .pdf-scroll { cursor: auto !important; } .pdf-scroll { cursor: default !important; }';
     document.head.appendChild(style);
     document.body.style.cursor = 'none';
     document.documentElement.style.cursor = 'none';
@@ -11,7 +11,10 @@
     function stripCursors() {
         var all = document.querySelectorAll('*');
         for (var i = 0; i < all.length; i++) {
-            all[i].style.cursor = 'none';
+            var el = all[i];
+            // Skip PDF viewer elements so native cursor works for precise clicking
+            if (el.closest && el.closest('.pdf-viewer')) continue;
+            el.style.cursor = 'none';
         }
     }
     stripCursors();
@@ -30,6 +33,7 @@
 
     var mx = -100, my = -100;
     var isDown = false;
+    var overPdf = false;
     var downTimer = null;
 
     function resize() {
@@ -42,6 +46,7 @@
     document.addEventListener('mousemove', function(e) {
         mx = e.clientX;
         my = e.clientY;
+        overPdf = !!(e.target.closest && e.target.closest('.pdf-viewer'));
     });
     document.addEventListener('mousedown', function() {
         isDown = true;
@@ -57,7 +62,7 @@
 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        if (mx < 0 || my < 0) {
+        if (mx < 0 || my < 0 || overPdf) {
             requestAnimationFrame(draw);
             return;
         }
